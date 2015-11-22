@@ -15,7 +15,7 @@ surf = xfeatures2d.SURF_create()
 # surf.extended = True #for expand descriptor to 128bits, default is 64
 
 # image of land zone (H-mark, landmark)
-land_zone = cv2.imread('samples/land-zone-sample-binary.jpg', 0)
+land_zone = cv2.imread('samples/land-zone-raspberry.jpg')
 
 # keypoint and descriptors of landmark
 landmark_keypoints, landmark_descriptors = surf.detectAndCompute(land_zone, None)
