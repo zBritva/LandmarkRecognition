@@ -15,7 +15,7 @@ surf = xfeatures2d.SURF_create()
 # surf.extended = True #for expand descriptor to 128bits, default is 64
 
 # image of land zone (H-mark, landmark)
-land_zone = cv2.imread('samples/land-zone-raspberry.jpg')
+land_zone = cv2.imread('samples/land-zone-raspberry-logo.jpg')
 
 # keypoint and descriptors of landmark
 landmark_keypoints, landmark_descriptors = surf.detectAndCompute(land_zone, None)
@@ -54,7 +54,7 @@ while (True):
     # ratio test as per Lowe's paper
 
     for i, (m, n) in enumerate(matches):
-        if m.distance < 0.7 * n.distance:
+        if m.distance < 0.45 * n.distance:
             matchesMask[i] = [1, 0]
 
     draw_params = dict(matchColor=(0, 255, 0),

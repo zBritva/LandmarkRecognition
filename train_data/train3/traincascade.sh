@@ -1,0 +1,1 @@
+opencv_traincascade -data /Volumes/Macintosh/Users/zBritva/Projects/LandmarkRecognition/train_data/train3/trained/ -vec train.vec -bg bg.txt -numPos 800 -numNeg 8 -numStages 20 -precalcValBufSize 2048 -precalcIdxBufSize 4096 -numThreads 14 -featureType haar -w 80 -h 80 -acceptanceRatioBreakValue 10e-5 -maxFalseAlarmRate 0.4 -minHitRate 0.995

@@ -1,1 +1,1 @@
-opencv_createsamples -vec train.vec -img ./positive/helipad.jpg -bg bg.txt -w 40 -h 40 -maxxangle 60 -maxyangle 60 -maxzangle 60 -num 100
+opencv_createsamples -show -bgcolor 100 -vec train.vec -img ./positive/helipad.jpg -bg bg.txt -w 60 -h 60 -maxxangle 1 -maxyangle 1 -maxzangle 2 -num 10000
