@@ -41,17 +41,9 @@ while (True):
 
     # gray = cv2.medianBlur(gray, 3)
 
-    # kernel = np.ones((3, 3), np.uint8)
-    # opening = cv2.morphologyEx(gray, cv2.MORPH_OPEN, kernel, iterations=1)
-
-    # # sure background area
-    # gray = cv2.dilate(opening, kernel, iterations=1)
 
     # # convert to im = np.array(float_img * 255, dtype = np.uint8)
     # gray = np.array(gray * 255, dtype=np.uint8)
-
-    # im2, contours, hierarchy = cv2.findContours(gray, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-
 
     # gray = (255-gray)
 
@@ -59,41 +51,23 @@ while (True):
     gray = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, \
                                  cv2.THRESH_BINARY, 11, 2)
 
+
+    opening = cv2.morphologyEx(gray, cv2.MORPH_OPEN, kernel, iterations=1)
+    gray = cv2.dilate(opening, kernel, iterations=1)
+
+    im2, contours, hierarchy = cv2.findContours(gray, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+
+    # print 'Contours count: ', len(contours)
+
     # gray = cv2.medianBlur(gray, 3)
-    marks = cascade.detectMultiScale(gray, 3.8, 3)
 
-    # filter detections
+    for contour in contours:
+        contour = cv2.approxPolyDP(contour, 5, True)
 
-    for (x, y, w, h) in marks:
-        roi = gray[y:y+h, x:x+w]
+        if len(contour) > 5:
+            cv2.drawContours(frame, [contour], -1, (0,255,0), 3)
 
-        roi = cv2.medianBlur(roi, 3)
-
-        _, roi_gray = cv2.threshold(roi, 70, 225, cv2.THRESH_BINARY_INV)
-
-        opening = cv2.morphologyEx(roi_gray, cv2.MORPH_OPEN, kernel, iterations=1)
-        roi_gray = cv2.dilate(opening, kernel, iterations=1)
-
-    #
-        # cv2.imshow('rio', roi_gray)
-    #
-    #     break
-    #
-    #     print 'rio'
-    #
-    #     # sleep(15)
-    #
-    # sleep(15)
-
-    # end filter of detection
-
-
-    for (x, y, w, h) in marks:
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-    # ret,frameOut = cv2.threshold(gray,127,255,cv2.THRESH_BINARY)
-
-    frameOut = gray
+    frameOut = frame
     #
     cv2.imshow('frame', frameOut)
 

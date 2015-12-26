@@ -7,7 +7,7 @@ from cv2 import xfeatures2d
 
 
 # camera
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 # main method
 surf = xfeatures2d.SURF_create()
@@ -15,7 +15,7 @@ surf = xfeatures2d.SURF_create()
 # surf.extended = True #for expand descriptor to 128bits, default is 64
 
 # image of land zone (H-mark, landmark)
-land_zone = cv2.imread('samples/land-zone-raspberry-logo.jpg')
+land_zone = cv2.imread('Marks/H-helipad.png')
 
 # keypoint and descriptors of landmark
 landmark_keypoints, landmark_descriptors = surf.detectAndCompute(land_zone, None)
@@ -38,6 +38,8 @@ flann = cv2.FlannBasedMatcher(index_params, search_params)
 while (True):
     # Capture frame-by-frame
     ret, frame = cap.read()
+
+    frame = cv2.medianBlur(frame, 7)
 
     # compute frame keypoints and descriptors
     frame_keypoints, frame_descriptors = surf.detectAndCompute(frame, None)
