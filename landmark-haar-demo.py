@@ -105,7 +105,7 @@ while (True):
         for (x, y, w, h) in marks:
             # cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-            roi = frame[y:y+h, x:x+w]
+            roi = frame[y:y + h, x:x + w]
 
             # debug
             # while(True):
@@ -115,7 +115,6 @@ while (True):
             gray_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
 
             _, binary_roi = cv2.threshold(gray_roi, 127, 255, cv2.THRESH_BINARY)
-
 
             cv2.imshow('frame3', roi)
             cv2.imshow('frame4', binary_roi)
@@ -128,7 +127,7 @@ while (True):
                 if len(contour) > 5 and fabs(cv2.arcLength(contour, True)) > 20:
                     # x, y, width, height = cv2.boundingRect(contour)
                     # roi = frame[y:y+height, x:x+width]
-                    #shift contour
+                    # shift contour
                     # contour = cp.shiftContour(contour, x, y)
 
                     rect = cv2.minAreaRect(contour)
@@ -163,11 +162,11 @@ while (True):
                         cv2.circle(frame, (h_mark_points[7][0], h_mark_points[7][1]), 3, (100, 255, 255), 5)
 
 
-        # ret,frameOut = cv2.threshold(gray,127,255,cv2.THRESH_BINARY)
+                        # ret,frameOut = cv2.threshold(gray,127,255,cv2.THRESH_BINARY)
 
-        # gray_roi = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        #
-        # _, binary_roi = cv2.threshold(gray_roi, 127, 255, cv2.THRESH_BINARY)
+                        # gray_roi = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                        #
+                        # _, binary_roi = cv2.threshold(gray_roi, 127, 255, cv2.THRESH_BINARY)
 
     if True:
         im2, contours, hierarchy = cv2.findContours(binary_result, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
@@ -175,37 +174,61 @@ while (True):
         for contour in contours:
             contour = cv2.approxPolyDP(contour, 2, True)
 
-            if len(contour) > 5 and fabs(cv2.arcLength(contour, True)) > 20:
-                # x, y, width, height = cv2.boundingRect(contour)
-                # roi = frame[y:y+height, x:x+width]
-                #shift contour
-                # contour = cp.shiftContour(contour, x, y)
+            # find circle
+            area = cv2.contourArea(contour, oriented=False)
+            perim = cv2.arcLength(contour, closed=True)
 
-                rect = cv2.minAreaRect(contour)
+            if perim > 0 and area / (perim * perim) > 0.07 and area / (perim * perim) < 0.087:
+                x, y, width, height = cv2.boundingRect(contour)
+                roi_frame = np.copy(frame[y:y + height, x:x + width])
+                roi_circle = np.copy(binary[y:y + height, x:x + width])
 
-                box = cv2.boxPoints(rect)
-                box = np.int0(box)
-                # cv2.drawContours(frame, [box], 0, (0, 0, 255), 2)
-                # cv2.drawContours(frame, [contour], -1, (0, 255, 0), 3)
-                h_mark_points = cp.getBoxROI(box)
-                result = cp.checkBoxROI(binary_result, h_mark_points, True)
+                tt, circle_inner_contours, circle_inner_contours_hierarchy = cv2.findContours(roi_circle,
+                                                                                              cv2.RETR_LIST,
+                                                                                              cv2.CHAIN_APPROX_SIMPLE)
+                # cv2.imshow('frame4', tt)
 
-                if result:
-                    cv2.drawContours(frame, [box], 0, (0, 255, 0), 2)
-                else:
-                    cv2.drawContours(frame, [box], 0, (0, 0, 255), 2)
+                center, radius = cv2.minEnclosingCircle(contour)
+                cv2.circle(frame, (int(center[0]), int(center[1])), int(radius), (0, 0, 255), 3)
 
-                    radius = 2
+                for contour in circle_inner_contours:
+                    contour = cv2.approxPolyDP(contour, 2, True)
 
-                    cv2.circle(frame, (h_mark_points[0][0], h_mark_points[0][1]), radius, (255, 0, 0), radius)
-                    cv2.circle(frame, (h_mark_points[1][0], h_mark_points[1][1]), radius, (0, 255, 0), radius)
-                    cv2.circle(frame, (h_mark_points[2][0], h_mark_points[2][1]), radius, (0, 0, 255), radius)
-                    cv2.circle(frame, (h_mark_points[3][0], h_mark_points[3][1]), radius, (255, 255, 0), radius)
-                    cv2.circle(frame, (h_mark_points[4][0], h_mark_points[4][1]), radius, (255, 0, 255), radius)
-                    cv2.circle(frame, (h_mark_points[5][0], h_mark_points[5][1]), radius, (0, 255, 255), radius)
-                    cv2.circle(frame, (h_mark_points[6][0], h_mark_points[6][1]), radius, (255, 100, 255), radius)
-                    cv2.circle(frame, (h_mark_points[7][0], h_mark_points[7][1]), radius, (100, 255, 255), radius)
+                    if len(contour) < 5 or fabs(cv2.arcLength(contour, True)) < 20:
+                        continue
 
+                    # if len(contour) > 5 and fabs(cv2.arcLength(contour, True)) > 20:
+                    # x, y, width, height = cv2.boundingRect(contour)
+                    # roi = frame[y:y+height, x:x+width]
+                    # shift contour
+                    # contour = cp.shiftContour(contour, x, y)
+
+                    rect = cv2.minAreaRect(contour)
+
+                    box = cv2.boxPoints(rect)
+                    box = np.int0(box)
+                    # cv2.drawContours(frame, [box], 0, (0, 0, 255), 2)
+                    # cv2.drawContours(frame, [contour], -1, (0, 255, 0), 3)
+                    h_mark_points = cp.getBoxROI(box)
+                    result = cp.checkBoxROI(roi_circle, h_mark_points, True)
+
+                    if result:
+                        cv2.drawContours(roi_frame, [box], 0, (0, 255, 0), 2)
+                    else:
+                        cv2.drawContours(roi_frame, [box], 0, (0, 0, 255), 2)
+
+                        radius = 2
+
+                        cv2.circle(roi_frame, (h_mark_points[0][0], h_mark_points[0][1]), radius, (255, 0, 0), radius)
+                        cv2.circle(roi_frame, (h_mark_points[1][0], h_mark_points[1][1]), radius, (0, 255, 0), radius)
+                        cv2.circle(roi_frame, (h_mark_points[2][0], h_mark_points[2][1]), radius, (0, 0, 255), radius)
+                        cv2.circle(roi_frame, (h_mark_points[3][0], h_mark_points[3][1]), radius, (255, 255, 0), radius)
+                        cv2.circle(roi_frame, (h_mark_points[4][0], h_mark_points[4][1]), radius, (255, 0, 255), radius)
+                        cv2.circle(roi_frame, (h_mark_points[5][0], h_mark_points[5][1]), radius, (0, 255, 255), radius)
+                        cv2.circle(roi_frame, (h_mark_points[6][0], h_mark_points[6][1]), radius, (255, 100, 255), radius)
+                        cv2.circle(roi_frame, (h_mark_points[7][0], h_mark_points[7][1]), radius, (100, 255, 255), radius)
+
+                    cv2.imshow('frame3', roi_frame)
 
 
     frameOut = frame
