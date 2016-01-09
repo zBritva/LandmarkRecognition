@@ -308,3 +308,15 @@ class ContourProcessor:
             point[0][1] -= y
 
         return contour
+
+
+    def isInCircleInside(self, contour, center, radius):
+        try:
+            for point in contour:
+                distance = self.__distance__(center, point)
+                if distance > radius:
+                    return False
+        except Exception as ex:
+            print ex
+            return False
+        return True

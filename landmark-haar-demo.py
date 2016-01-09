@@ -9,6 +9,13 @@ from lib import contour_processor
 # camera
 cap = cv2.VideoCapture(0)
 
+# check camera
+check, test_frame = cap.read()
+
+if not check:
+    print 'Camera not found'
+    exit()
+
 # image data of leard (helipad, landmark)
 cascade = cv2.CascadeClassifier('./train_data/train3/H-helipad-2/cascade.xml')
 cp = contour_processor.ContourProcessor()
@@ -25,6 +32,9 @@ if cascade.empty():
 while (True):
     # Capture frame-by-frame
     ret, frame = cap.read()
+
+    if not ret:
+        continue
 
     # cv2.imshow('frame', frame)
 
@@ -97,9 +107,7 @@ while (True):
 
     # end filter of detection
 
-    # TODO 1. дописать поиск каскадом хаара
-    # TODO 2. внутри области детектирования, провести контурный анализ
-
+    # HAAR mode
     if False:
 
         for (x, y, w, h) in marks:
@@ -168,6 +176,7 @@ while (True):
                         #
                         # _, binary_roi = cv2.threshold(gray_roi, 127, 255, cv2.THRESH_BINARY)
 
+    # CIRCLE MODE
     if True:
         im2, contours, hierarchy = cv2.findContours(binary_result, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -194,7 +203,12 @@ while (True):
                 for contour in circle_inner_contours:
                     contour = cv2.approxPolyDP(contour, 2, True)
 
+                    # TODO обрабатывать только контуры, точки которых находятся внутри круга
+                    shifted_center = (center[0] - x, center[1] - 1)
                     if len(contour) < 5 or fabs(cv2.arcLength(contour, True)) < 20:
+                        # and not cp.isInCircleInside(contour,
+                        #                                                                                    center,
+                        #                                                                                    radius):
                         continue
 
                     # if len(contour) > 5 and fabs(cv2.arcLength(contour, True)) > 20:
@@ -225,11 +239,12 @@ while (True):
                         cv2.circle(roi_frame, (h_mark_points[3][0], h_mark_points[3][1]), radius, (255, 255, 0), radius)
                         cv2.circle(roi_frame, (h_mark_points[4][0], h_mark_points[4][1]), radius, (255, 0, 255), radius)
                         cv2.circle(roi_frame, (h_mark_points[5][0], h_mark_points[5][1]), radius, (0, 255, 255), radius)
-                        cv2.circle(roi_frame, (h_mark_points[6][0], h_mark_points[6][1]), radius, (255, 100, 255), radius)
-                        cv2.circle(roi_frame, (h_mark_points[7][0], h_mark_points[7][1]), radius, (100, 255, 255), radius)
+                        cv2.circle(roi_frame, (h_mark_points[6][0], h_mark_points[6][1]), radius, (255, 100, 255),
+                                   radius)
+                        cv2.circle(roi_frame, (h_mark_points[7][0], h_mark_points[7][1]), radius, (100, 255, 255),
+                                   radius)
 
                     cv2.imshow('frame3', roi_frame)
-
 
     frameOut = frame
     #
