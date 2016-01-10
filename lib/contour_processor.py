@@ -8,6 +8,11 @@ from math import sqrt
 
 
 class ContourProcessor:
+    # cm
+    focus_distance = 2
+    # cm
+    mark_size = 18.5
+
     def __distance__(self, point1, point2):
         return np.sqrt(np.power(point1[0] - point2[0], 2) + np.power(point1[1] - point2[1], 2))
 
@@ -279,8 +284,8 @@ class ContourProcessor:
                 color = 255 - avg_color_8
             else:
                 color = 1 - avg_color_8
-            # if not self.checkAvg(color, accept_percentage, binary):
-            #     return False
+                # if not self.checkAvg(color, accept_percentage, binary):
+                #     return False
 
         except Exception as ex:
             print ex
@@ -309,14 +314,17 @@ class ContourProcessor:
 
         return contour
 
-
     def isInCircleInside(self, contour, center, radius):
         try:
             for point in contour:
-                distance = self.__distance__(center, point)
+                distance = self.__distance__(center, point[0])
                 if distance > radius:
                     return False
         except Exception as ex:
             print ex
             return False
         return True
+
+    def calculateDistance(self, radius):
+        # return self.focus_distance / (self.mark_size * (radius)) * 500 * 153
+        return self.focus_distance + (self.focus_distance * self.mark_size / radius) * 183
