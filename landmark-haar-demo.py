@@ -12,11 +12,11 @@ cap = cv2.VideoCapture(0)
 # check camera
 check, test_frame = cap.read()
 
-print 'FRAME SIZE:' + str(len(test_frame[0])) + ' ' + str(len(test_frame[1]))
-
 if not check:
     print 'Camera not found'
     exit()
+
+print 'FRAME SIZE:' + str(len(test_frame[0])) + ' ' + str(len(test_frame[1]))
 
 # image data of leard (helipad, landmark)
 cascade = cv2.CascadeClassifier('./train_data/train3/H-helipad-2/cascade.xml')
