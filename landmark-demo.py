@@ -281,7 +281,7 @@ while (True):
                         result = emark.checkBoxROIToHMark(roi_circle, e_mark_points, True)
 
                         if result:
-                            cv2.drawContours(roi_frame_e, [box], 0, (0, 255, 0), 2)
+                            cv2.drawContours(roi_frame, [box], 0, (0, 255, 0), 2)
                             emark.drawMarkType(frame)
                             emark.drawMark(roi_frame, h_mark_points, (x, y))
                         # else:
