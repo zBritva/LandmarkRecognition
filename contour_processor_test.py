@@ -3,7 +3,7 @@ __author__ = 'zBritva'
 
 import cv2
 import numpy as np
-from lib import contour_processor
+from lib import h_mark_processor
 
 img = cv2.imread('Marks/H-helipad.png')
 
@@ -17,11 +17,11 @@ img2, contours, hierarchy = cv2.findContours(gray, cv2.RETR_LIST, cv2.CHAIN_APPR
 
 cv2.drawContours(img, contours, 0, (0, 0, 255), 2)
 
-cp = contour_processor.ContourProcessor()
+cp = h_mark_processor.HMarkProcessor()
 
 h_mark_points = cp.getBoxROI([[105, 70], [105, len(img[0])-70], [len(img[0])-95, len(img[1])-70], [len(img[1])-95, 70]])
 
-result = cp.checkBoxROI(img, h_mark_points)
+result = cp.checkBoxROIToHMark(img, h_mark_points)
 
 cv2.circle(img, (h_mark_points[0][0], h_mark_points[0][1]), 3, (255, 0, 0), 5)
 cv2.circle(img, (h_mark_points[1][0], h_mark_points[1][1]), 3, (0, 255, 0), 5)

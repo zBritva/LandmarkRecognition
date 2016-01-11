@@ -4,7 +4,7 @@ __author__ = 'zBritva'
 import cv2
 import numpy as np
 from time import sleep
-from lib.contour_processor import ContourProcessor
+from lib.h_mark_processor import HMarkProcessor
 
 # camera
 cap = cv2.VideoCapture(0)
@@ -20,7 +20,7 @@ if cascade.empty():
 
 # print 'HAAR' if cascade.getFeatureType() == 0 else 'LBP'
 
-contourProcessor = ContourProcessor()
+contourProcessor = HMarkProcessor()
 
 while (True):
     # Capture frame-by-frame
