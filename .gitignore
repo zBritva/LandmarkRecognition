@@ -3,3 +3,4 @@
 train_data/train2/
 train_data/train4/
 data
+*.pyc

@@ -7,6 +7,7 @@ from math import fabs
 from lib import controur_processor
 from lib import h_mark_processor
 from lib import e_mark_processor
+from lib import z_mark_processor
 
 # camera
 cap = cv2.VideoCapture(0)
@@ -24,6 +25,7 @@ print 'FRAME SIZE:' + str(len(test_frame[0])) + ' ' + str(len(test_frame[1]))
 cascade = cv2.CascadeClassifier('./train_data/train3/H-helipad-2/cascade.xml')
 hmark = h_mark_processor.HMarkProcessor()
 emark = e_mark_processor.EMarkProcessor()
+zmark = z_mark_processor.ZMarkProcessor()
 
 kernel = np.ones((3, 3), np.uint8)
 
@@ -205,7 +207,6 @@ while (True):
                     roi_frame = np.copy(frame[y:y + height, x:x + width])
                     roi_circle = np.copy(binary[y:y + height, x:x + width])
 
-                    cv2.imshow('frame4', cv2.resize(roi_circle, display_frame_size))
 
                     tt = None
                     circle_inner_contours = None
@@ -275,7 +276,6 @@ while (True):
                         #     cv2.drawContours(roi_frame, [box], 0, (0, 0, 255), 2)
                         #     hmark.drawMark(roi_frame, h_mark_points, (0, 0))
 
-                        roi_frame_e = np.copy(roi_frame)
                         # Check to E mark
                         e_mark_points = emark.getBoxROI(box)
                         result = emark.checkBoxROIToHMark(roi_circle, e_mark_points, True)
@@ -288,10 +288,22 @@ while (True):
                         #     cv2.drawContours(roi_frame_e, [box], 0, (0, 0, 255), 2)
                         #     emark.drawMark(roi_frame_e, h_mark_points, (x, y))
 
-                        # cv2.imshow('frame3', roi_frame)
+                        # Check to Z mark
+                        z_mark_points = zmark.getBoxROI(box)
+                        result = zmark.checkBoxROIToHMark(roi_circle, z_mark_points, True)
+
+                        if result:
+                            zmark.drawMarkType(frame)
+                            cv2.drawContours(roi_frame, [box], 0, (0, 255, 0), 2)
+                            zmark.drawMark(roi_frame, z_mark_points, (x, y))
+                        # else:
+                        #     cv2.drawContours(roi_frame_e, [box], 0, (0, 0, 255), 2)
+                        #     emark.drawMark(roi_frame_e, h_mark_points, (x, y))
 
                         cv2.imshow('frame3', cv2.resize(roi_frame, display_frame_size))
-                        # cv2.imshow('frame3_e', cv2.resize(roi_frame_e, display_frame_size))
+
+
+                    cv2.imshow('frame4', cv2.resize(roi_circle, display_frame_size))
 
 
         frameOut = frame
