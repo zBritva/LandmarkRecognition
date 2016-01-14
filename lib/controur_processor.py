@@ -23,16 +23,16 @@ class ContourProcessor:
 
         return np.int0([x, y])
 
-    def createLineIterator(self, P1, P2, img, binary=False):
+    def createLineIterator(self, point1, point2, img, binary=False):
 
         # define local variables for readability
 
         imageH = img.shape[0]
         imageW = img.shape[1]
-        P1X = P1[0]
-        P1Y = P1[1]
-        P2X = P2[0]
-        P2Y = P2[1]
+        P1X = point1[0]
+        P1Y = point1[1]
+        P2X = point2[0]
+        P2Y = point2[1]
 
         # difference and absolute difference between points
         # used to calculate slope and relative location between points
@@ -126,12 +126,8 @@ class ContourProcessor:
         # else:
         #     return sum * 1.0 / len(iterator)
 
-    def checkAvg(self, avg, accept_percentage, binary=False):
-        # 2.55 - 1 percent of 255
-        # if not binary:
+    def checkAvg(self, avg, accept_percentage):
         return int(avg * 1.0 / 2.55) > accept_percentage
-        # else:
-        #     return avg * 1.0 / 0.01 > accept_percentage
 
     def shiftContour(self, contour, x, y):
         for point in contour:
@@ -156,7 +152,5 @@ class ContourProcessor:
         return self.focus_distance + (self.focus_distance * self.mark_size / radius) * 183
 
     def drawMark(self, img, points, shift):
-        for point in points:
-            point[0] += shift[0]
-            point[1] += shift[1]
-            cv2.circle(img, (point[0], point[1]), 3, (128, 128, 0), 2)
+        raise Exception('Function must be overridden in child classes')
+
