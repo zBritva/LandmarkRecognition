@@ -22,3 +22,7 @@ Indices and tables
 * :ref:`search`
 * :ref:`classes/index`
 
+.. warning::
+
+   Documentation is incomplete
+

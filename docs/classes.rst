@@ -29,7 +29,7 @@ This class contains methods for processing frame image for recognizing landmark
 
    Convert RGB color to grayscale
 
-.. py:method:: getLineAvgColor(self, iterator, binary=False):
+.. py:method:: getLineAvgColor(self, iterator, binary=False)
 
    Compute average value of color in array of pixels given by createLineIterator
 
@@ -49,10 +49,40 @@ This class contains methods for processing frame image for recognizing landmark
 
    Calculate distance from the camera to landmark bounding by circle
 
-.. py:method:: drawMark(self, img, points, shift):
+.. py:method:: drawMark(self, img, points, shift)
 
    Draw landmark linies in image
 
 .. warning::
 
    Function must be overridden in child classes
+
+
+.. py:class:: HMarkProcessor(ContourProcessor)
+
+    Contains methods for determining H-mark helipad
+
+.. py:method:: getBoxROI(self, box)
+
+.. py:method:: checkBoxROIToHMark(self, image, h_mark_points, binary=False, accept_percentage=85)
+
+
+.. py:class:: ZMarkProcessor(ContourProcessor)
+
+    Contains methods for determining Z-mark helipad
+
+.. py:method:: getBoxROI(self, box)
+
+.. py:method:: checkBoxROIToHMark(self, image, h_mark_points, binary=False, accept_percentage=85)
+
+
+
+.. py:class:: EMarkProcessor(ContourProcessor)
+
+    Contains methods for determining E-mark helipad
+
+.. py:method:: getBoxROI(self, box)
+
+.. py:method:: checkBoxROIToHMark(self, image, h_mark_points, binary=False, accept_percentage=85)
+
+
