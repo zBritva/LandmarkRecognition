@@ -5,11 +5,21 @@ import cv2
 import numpy as np
 from math import fabs
 from math import sqrt
-from controur_processor import ContourProcessor
+from contour_processor import ContourProcessor
 
 
 class EMarkProcessor(ContourProcessor):
+    """
+    Contains methods for determining E-mark helipad
+    """
     def getBoxROI(self, box):
+        """
+        Return interest coordinates of points for recognizing mark
+
+        :param box: a array of box given by :func:`cv2.boxPoints`
+
+        :return: coordinates of point
+        """
 
         # points of interest
         #
@@ -29,8 +39,8 @@ class EMarkProcessor(ContourProcessor):
         point3 = box[2]
         point4 = box[3]
 
-        distance1 = self.__distance__(point1, point2)
-        distance2 = self.__distance__(point2, point3)
+        distance1 = self.distance(point1, point2)
+        distance2 = self.distance(point2, point3)
 
         middle_point_1 = None
         middle_point_2 = None
@@ -42,52 +52,62 @@ class EMarkProcessor(ContourProcessor):
         middle_point_2_90 = None
 
         if distance1 > distance2:
-            middle_point_1 = self.__middlePoint__(point1, point2)
-            middle_point_2 = self.__middlePoint__(point3, point4)
+            middle_point_1 = self.middlePoint(point1, point2)
+            middle_point_2 = self.middlePoint(point3, point4)
 
-            middle_point_1_10 = self.__middlePoint__(point1, point2, 0.1)
-            middle_point_1_90 = self.__middlePoint__(point1, point2, 10)
-            middle_point_2_10 = self.__middlePoint__(point3, point4, 0.1)
-            middle_point_2_90 = self.__middlePoint__(point3, point4, 10)
+            middle_point_1_10 = self.middlePoint(point1, point2, 0.1)
+            middle_point_1_90 = self.middlePoint(point1, point2, 10)
+            middle_point_2_10 = self.middlePoint(point3, point4, 0.1)
+            middle_point_2_90 = self.middlePoint(point3, point4, 10)
         else:
-            middle_point_1 = self.__middlePoint__(point2, point3)
-            middle_point_2 = self.__middlePoint__(point4, point1)
+            middle_point_1 = self.middlePoint(point2, point3)
+            middle_point_2 = self.middlePoint(point4, point1)
 
-            middle_point_1_10 = self.__middlePoint__(point2, point3, 0.1)
-            middle_point_1_90 = self.__middlePoint__(point2, point3, 10)
-            middle_point_2_10 = self.__middlePoint__(point4, point1, 0.1)
-            middle_point_2_90 = self.__middlePoint__(point4, point1, 10)
+            middle_point_1_10 = self.middlePoint(point2, point3, 0.1)
+            middle_point_1_90 = self.middlePoint(point2, point3, 10)
+            middle_point_2_10 = self.middlePoint(point4, point1, 0.1)
+            middle_point_2_90 = self.middlePoint(point4, point1, 10)
 
         # find point 2 and 5
-        mark_point_2 = self.__middlePoint__(middle_point_1, middle_point_2, 0.1)
-        mark_point_5 = self.__middlePoint__(middle_point_1, middle_point_2, 10)
+        mark_point_2 = self.middlePoint(middle_point_1, middle_point_2, 0.1)
+        mark_point_5 = self.middlePoint(middle_point_1, middle_point_2, 10)
 
         # find point 1 and 6
-        mark_point_6 = self.__middlePoint__(middle_point_2_10, middle_point_1_90, 0.1)
-        mark_point_1 = self.__middlePoint__(middle_point_2_10, middle_point_1_90, 10)
+        mark_point_6 = self.middlePoint(middle_point_2_10, middle_point_1_90, 0.1)
+        mark_point_1 = self.middlePoint(middle_point_2_10, middle_point_1_90, 10)
 
         # find point 3 and 4
-        mark_point_3 = self.__middlePoint__(middle_point_1_10, middle_point_2_90, 0.1)
-        mark_point_4 = self.__middlePoint__(middle_point_1_10, middle_point_2_90, 10)
+        mark_point_3 = self.middlePoint(middle_point_1_10, middle_point_2_90, 0.1)
+        mark_point_4 = self.middlePoint(middle_point_1_10, middle_point_2_90, 10)
 
         # TODO add 7 and 8
-        middle_point_2_3 = self.__middlePoint__(mark_point_2, mark_point_3)
-        middle_point_4_5 = self.__middlePoint__(mark_point_4, mark_point_5)
+        middle_point_2_3 = self.middlePoint(mark_point_2, mark_point_3)
+        middle_point_4_5 = self.middlePoint(mark_point_4, mark_point_5)
 
-        mark_point_7 = self.__middlePoint__(middle_point_2_3, middle_point_4_5, 0.3)
-        mark_point_8 = self.__middlePoint__(middle_point_4_5, middle_point_2_3, 0.3)
+        mark_point_7 = self.middlePoint(middle_point_2_3, middle_point_4_5, 0.3)
+        mark_point_8 = self.middlePoint(middle_point_4_5, middle_point_2_3, 0.3)
 
         # TODO add 9 and 10
-        middle_point_1_2 = self.__middlePoint__(mark_point_1, mark_point_2)
-        middle_point_5_6 = self.__middlePoint__(mark_point_5, mark_point_6)
+        middle_point_1_2 = self.middlePoint(mark_point_1, mark_point_2)
+        middle_point_5_6 = self.middlePoint(mark_point_5, mark_point_6)
 
-        mark_point_9 = self.__middlePoint__(middle_point_1_2, middle_point_5_6, 0.3)
-        mark_point_10 = self.__middlePoint__(middle_point_5_6, middle_point_1_2, 0.3)
+        mark_point_9 = self.middlePoint(middle_point_1_2, middle_point_5_6, 0.3)
+        mark_point_10 = self.middlePoint(middle_point_5_6, middle_point_1_2, 0.3)
 
         return [mark_point_1, mark_point_2, mark_point_3, mark_point_4, mark_point_5, mark_point_6, mark_point_7,
                 mark_point_8, mark_point_9, mark_point_10]
 
     def checkBoxROIToHMark(self, image, e_mark_points, binary=False, accept_percentage=85):
+        """
+        Check coordinates given by :func:`EMarkProcessor.getBoxROI`
+
+        :param image: binary image where was found landmark
+        :param h_mark_points: a array of point from given by :func:`EMarkProcessor.getBoxROI`
+        :param binary: Should be True if image is binary format
+        :param accept_percentage: accept percentage when landmark will mark as recognized
+
+        :return:
+        """
         point1 = e_mark_points[0]
         point2 = e_mark_points[1]
         point3 = e_mark_points[2]
@@ -167,10 +187,28 @@ class EMarkProcessor(ContourProcessor):
         return True
 
     def drawMarkType(self, img):
+        """
+        Display text with marktype E
+
+        :param img: image for drawing
+
+        :return: None
+        """
         cv2.putText(img, 'MARK TYPE: E',
                     (0, 0 + 55), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 0))
 
     def drawMark(self, img, e_mark_points, shift):
+        """
+        Draw mark on image for visual display
+
+        :param img: image for drawing
+        :param h_mark_points: point of mark given by :func:`EMarkProcessor.getBoxROI`
+        :param shift: shift coordinates of mark
+
+        .. warning:: parameter shift is obsolete
+
+        :return: None
+        """
         # super(EMarkProcessor, self).drawMark(img, e_mark_points, shift)
 
         point1 = e_mark_points[0]

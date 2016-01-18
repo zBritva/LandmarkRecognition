@@ -2,10 +2,10 @@
 .DS_Store
 train_data/train2/
 train_data/train4/
-lib/controur_processor.pyc
-lib/z_mark_processor.pyc
-lib/e_mark_processor.pyc
-lib/h_mark_processor.pyc
+marktypes/controur_processor.pyc
+marktypes/z_mark_processor.pyc
+marktypes/e_mark_processor.pyc
+marktypes/h_mark_processor.pyc
 docs/_build
 data
 *.pyc

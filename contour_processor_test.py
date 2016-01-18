@@ -3,7 +3,7 @@ __author__ = 'zBritva'
 
 import cv2
 import numpy as np
-from lib import h_mark_processor
+from marktypes import h_mark_processor
 
 img = cv2.imread('Marks/H-helipad.png')
 

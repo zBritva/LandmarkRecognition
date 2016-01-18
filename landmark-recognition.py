@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 __author__ = 'zBritva'
 
+from math import fabs
+
 import cv2
 import numpy as np
-from math import fabs
-from lib import controur_processor
-from lib import h_mark_processor
-from lib import e_mark_processor
-from lib import z_mark_processor
+
+from marktypes import e_mark_processor
+from marktypes import h_mark_processor
+from marktypes import z_mark_processor
+from landmark_config import LandmarkRecognitionConfiguration
+from landmark_frame import LandmarkFrame
 
 # camera
 cap = cv2.VideoCapture(0)
@@ -15,15 +18,21 @@ cap = cv2.VideoCapture(0)
 # check camera
 check, test_frame = cap.read()
 
+# read the configuration
+lrc = LandmarkRecognitionConfiguration()
+lf = LandmarkFrame(lrc)
+
 if not check:
     print 'Camera not found'
-    exit()
+    exit(-1)
 
 print 'FRAME SIZE:' + str(len(test_frame[0])) + ' ' + str(len(test_frame[1]))
 
 hmark = h_mark_processor.HMarkProcessor()
 emark = e_mark_processor.EMarkProcessor()
 zmark = z_mark_processor.ZMarkProcessor()
+
+mode = lrc.get_mode()
 
 kernel = np.ones((3, 3), np.uint8)
 
@@ -32,7 +41,7 @@ cv2.namedWindow("frame2", cv2.WINDOW_AUTOSIZE)
 cv2.namedWindow("frame3", cv2.WINDOW_AUTOSIZE)
 cv2.namedWindow("frame4", cv2.WINDOW_AUTOSIZE)
 
-display_frame_size = (320, 240)
+display_frame_size = lrc.get_frame_size()
 
 while (True):
     try:
@@ -52,28 +61,14 @@ while (True):
         gray_tr = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         gray_hight = gray_tr
-        gray_medium = np.copy(gray_tr)
-        gray_low = np.copy(gray_tr)
+        # gray_medium = np.copy(gray_tr)
+        # gray_low = np.copy(gray_tr)
 
-        _, binary_double_hight = cv2.threshold(gray_hight, 175, 255, cv2.THRESH_BINARY)
-        _, binary_hight = cv2.threshold(gray_hight, 155, 225, cv2.THRESH_BINARY)
-        _, binary_medium = cv2.threshold(gray_medium, 125, 200, cv2.THRESH_BINARY)
-        _, binary_low = cv2.threshold(gray_low, 75, 150, cv2.THRESH_BINARY)
-        _, binary_double_low = cv2.threshold(gray_low, 25, 125, cv2.THRESH_BINARY)
+        binary_images = lf.get_frames(gray_tr, mode)
 
-        cv2.imshow('GR', gray_tr)
-        cv2.imshow('BDH', binary_double_hight)
-        cv2.imshow('BH', binary_hight)
-        cv2.imshow('BM', binary_medium)
-        cv2.imshow('BL', binary_low)
-        cv2.imshow('BDL', binary_double_low)
+        _, binary_source_image = cv2.threshold(gray_hight, 155, 225, cv2.THRESH_BINARY)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-        continue
-
-        opening = cv2.morphologyEx(binary_hight, cv2.MORPH_OPEN, kernel, iterations=1)
+        opening = cv2.morphologyEx(binary_source_image, cv2.MORPH_OPEN, kernel, iterations=1)
         bin_res = cv2.dilate(opening, kernel, iterations=1)
 
         binary_result = cv2.medianBlur(bin_res, 3)
@@ -94,7 +89,7 @@ while (True):
             if perim > 0 and 0.07 < ratio < 0.087:
                 x, y, width, height = cv2.boundingRect(contour)
                 roi_frame = np.copy(frame[y:y + height, x:x + width])
-                roi_circle = np.copy(binary_hight[y:y + height, x:x + width])
+                roi_circle = np.copy(binary_source_image[y:y + height, x:x + width])
 
 
                 tt = None
@@ -165,7 +160,7 @@ while (True):
 
                 cv2.imshow('frame4', cv2.resize(roi_circle, display_frame_size))
 
-        cv2.imshow('frame2', cv2.resize(binary_hight, display_frame_size))
+        cv2.imshow('frame2', cv2.resize(binary_source_image, display_frame_size))
         cv2.imshow('frame1', cv2.resize(frame, display_frame_size))
 
         if cv2.waitKey(1) & 0xFF == ord('q'):

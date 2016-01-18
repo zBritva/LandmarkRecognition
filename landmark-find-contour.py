@@ -4,7 +4,7 @@ __author__ = 'zBritva'
 import cv2
 import numpy as np
 from time import sleep
-from lib.h_mark_processor import HMarkProcessor
+from marktypes.h_mark_processor import HMarkProcessor
 
 # camera
 cap = cv2.VideoCapture(0)
