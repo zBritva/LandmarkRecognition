@@ -6,6 +6,8 @@
 Welcome to LandmarkRecognition's documentation!
 ===============================================
 
+Recognition of a predefined landmark using optical flow sensor / camera (Positioning and landing)
+
 Contents:
 
 .. toctree::

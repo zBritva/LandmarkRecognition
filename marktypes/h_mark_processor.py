@@ -113,19 +113,19 @@ class HMarkProcessor(ContourProcessor):
             # 1 - 3
             iterator_1_3 = self.createLineIterator(point1, point3, image, binary)
             avg_color_1_3 = self.getLineAvgColor(iterator_1_3, binary)
-            if not self.checkAvg(avg_color_1_3, accept_percentage, binary):
+            if not self.checkAvg(avg_color_1_3, accept_percentage):
                 return False
 
             # 4 - 6
             iterator_4_6 = self.createLineIterator(point4, point6, image, binary)
             avg_color_4_6 = self.getLineAvgColor(iterator_4_6, binary)
-            if not self.checkAvg(avg_color_4_6, accept_percentage, binary):
+            if not self.checkAvg(avg_color_4_6, accept_percentage):
                 return False
 
             # 2 - 5
             iterator_2_5 = self.createLineIterator(point2, point5, image, binary)
             avg_color_2_5 = self.getLineAvgColor(iterator_2_5, binary)
-            if not self.checkAvg(avg_color_2_5, accept_percentage, binary):
+            if not self.checkAvg(avg_color_2_5, accept_percentage):
                 return False
 
             # check point 7
@@ -153,7 +153,7 @@ class HMarkProcessor(ContourProcessor):
             color = 255 - avg_color_7
             # else:
             #     color = 1 - avg_color_7
-            if not self.checkAvg(color, accept_percentage, binary):
+            if not self.checkAvg(color, accept_percentage):
                 return False
 
             # check point 8
@@ -181,7 +181,7 @@ class HMarkProcessor(ContourProcessor):
             color = 255 - avg_color_8
             # else:
             #     color = 1 - avg_color_8
-            if not self.checkAvg(color, accept_percentage, binary):
+            if not self.checkAvg(color, accept_percentage):
                 return False
 
         except Exception as ex:

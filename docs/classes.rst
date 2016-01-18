@@ -5,6 +5,9 @@ Classes
 
 .. _ContourProcessor-label:
 
+.. automodule:: landmark_config
+   :members:
+
 .. automodule:: landmark_frame
    :members:
 

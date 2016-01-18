@@ -117,19 +117,19 @@ class ZMarkProcessor(ContourProcessor):
             avg_color_3_6 = self.getLineAvgColor(iterator_3_6, binary)
 
             # 3 - 6
-            if not self.checkAvg(avg_color_3_6, accept_percentage, binary):
+            if not self.checkAvg(avg_color_3_6, accept_percentage):
                 return False
 
             # 3 - 4
             iterator_3_4 = self.createLineIterator(point3, point4, image, binary)
             avg_color_3_4 = self.getLineAvgColor(iterator_3_4, binary)
-            if not self.checkAvg(avg_color_3_4, accept_percentage, binary):
+            if not self.checkAvg(avg_color_3_4, accept_percentage):
                 return False
 
             # 1 - 6
             iterator_1_6 = self.createLineIterator(point1, point6, image, binary)
             avg_color_1_6 = self.getLineAvgColor(iterator_1_6, binary)
-            if not self.checkAvg(avg_color_1_6, accept_percentage, binary):
+            if not self.checkAvg(avg_color_1_6, accept_percentage):
                 return False
 
             # 7 - 8 (black)
@@ -142,7 +142,7 @@ class ZMarkProcessor(ContourProcessor):
             # else:
             #     color = 1 - avg_color_7_8
 
-            if not self.checkAvg(color, accept_percentage, binary):
+            if not self.checkAvg(color, accept_percentage):
                 return False
 
             # 9 - 10 (black)
@@ -155,7 +155,7 @@ class ZMarkProcessor(ContourProcessor):
             # else:
             #     color = 1 - avg_color_9_10
 
-            if not self.checkAvg(color, accept_percentage, binary):
+            if not self.checkAvg(color, accept_percentage):
                 return False
 
         except Exception as ex:

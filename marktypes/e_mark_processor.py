@@ -130,28 +130,28 @@ class EMarkProcessor(ContourProcessor):
             avg_color_4_6 = self.getLineAvgColor(iterator_4_6, binary)
 
             # calso heck that mark is not 8 number
-            if not self.checkAvg(avg_color_1_3, accept_percentage, binary) \
-                    and not self.checkAvg(avg_color_4_6, accept_percentage, binary) \
-                    or self.checkAvg(avg_color_1_3, accept_percentage, binary) \
-                            and self.checkAvg(avg_color_4_6, accept_percentage, binary):
+            if not self.checkAvg(avg_color_1_3, accept_percentage) \
+                    and not self.checkAvg(avg_color_4_6, accept_percentage) \
+                    or self.checkAvg(avg_color_1_3, accept_percentage) \
+                            and self.checkAvg(avg_color_4_6, accept_percentage):
                 return False
 
             # 3 - 4
             iterator_3_4 = self.createLineIterator(point3, point4, image, binary)
             avg_color_3_4 = self.getLineAvgColor(iterator_3_4, binary)
-            if not self.checkAvg(avg_color_3_4, accept_percentage, binary):
+            if not self.checkAvg(avg_color_3_4, accept_percentage):
                 return False
 
             # 2 - 5
             iterator_2_5 = self.createLineIterator(point2, point5, image, binary)
             avg_color_2_5 = self.getLineAvgColor(iterator_2_5, binary)
-            if not self.checkAvg(avg_color_2_5, accept_percentage, binary):
+            if not self.checkAvg(avg_color_2_5, accept_percentage):
                 return False
 
             # 1 - 6
             iterator_1_6 = self.createLineIterator(point1, point6, image, binary)
             avg_color_1_6 = self.getLineAvgColor(iterator_1_6, binary)
-            if not self.checkAvg(avg_color_1_6, accept_percentage, binary):
+            if not self.checkAvg(avg_color_1_6, accept_percentage):
                 return False
 
             # 7 - 8 (black)
@@ -164,7 +164,7 @@ class EMarkProcessor(ContourProcessor):
             # else:
             #     color = 1 - avg_color_7_8
 
-            if not self.checkAvg(color, accept_percentage, binary):
+            if not self.checkAvg(color, accept_percentage):
                 return False
 
             # 9 - 10 (black)
@@ -177,7 +177,7 @@ class EMarkProcessor(ContourProcessor):
             # else:
             #     color = 1 - avg_color_9_10
 
-            if not self.checkAvg(color, accept_percentage, binary):
+            if not self.checkAvg(color, accept_percentage):
                 return False
 
         except Exception as ex:
