@@ -29,8 +29,11 @@ if platform.system() == 'Linux':
         sys.path.insert(0, os.path.abspath('./../lib/raspberry'))
     else:
         sys.path.insert(0, os.path.abspath('./../lib/linux'))
+        os.environ['LD_LIBRARY_PATH'] = os.path.abspath('./../lib/linux')
 if platform.system() == 'win32':
     sys.path.insert(0, os.path.abspath('./../lib/windows'))
+
+
 
 import cv2
 # -- General configuration ------------------------------------------------
