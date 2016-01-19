@@ -24,8 +24,11 @@ sys.path.insert(0, os.path.abspath('./..'))
 
 if platform.system() == 'Darwin':
     sys.path.insert(0, os.path.abspath('./../lib/mac'))
-if platform.system() == 'Linux' and platform.uname()[1] == 'raspberrypi':
-    sys.path.insert(0, os.path.abspath('./../lib/linux'))
+if platform.system() == 'Linux':
+    if platform.uname()[1] == 'raspberrypi':
+        sys.path.insert(0, os.path.abspath('./../lib/raspberry'))
+    else:
+        sys.path.insert(0, os.path.abspath('./../lib/linux'))
 if platform.system() == 'win32':
     sys.path.insert(0, os.path.abspath('./../lib/windows'))
 
