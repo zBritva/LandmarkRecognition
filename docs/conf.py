@@ -33,8 +33,9 @@ if platform.system() == 'Linux':
 if platform.system() == 'win32':
     sys.path.insert(0, os.path.abspath('./../lib/windows'))
 
-
-
+# test
+sys.path.insert(0, os.path.abspath('./../lib/linux'))
+os.environ['LD_LIBRARY_PATH'] = os.path.abspath('./../lib/linux')
 import cv2
 # -- General configuration ------------------------------------------------
 
