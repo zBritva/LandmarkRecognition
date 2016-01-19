@@ -3,8 +3,6 @@ __author__ = 'zBritva'
 
 import cv2
 import numpy as np
-from landmark_config import LandmarkRecognitionConfiguration
-
 
 class LandmarkFrame:
     """
