@@ -37,9 +37,9 @@ if platform.system() == 'win32':
 # test
 sys.path.insert(0, os.path.abspath('./../lib/linux'))
 os.environ['LD_LIBRARY_PATH'] = os.path.abspath('./../lib/linux')
-
-subprocess.call("export LD_LIBRARY_PATH=" + os.path.abspath('./../lib/linux'))
+print os.path.abspath('./../lib/linux')
 import cv2
+print 'cv2 was imported'
 
 # -- General configuration ------------------------------------------------
 
