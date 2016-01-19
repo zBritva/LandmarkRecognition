@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>marktypes.contour_processor &mdash; LandmarkRecognition 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="LandmarkRecognition 0.1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> LandmarkRecognition
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../description.html">Landmark Recognition Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../classes.html">Classes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">LandmarkRecognition</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>marktypes.contour_processor</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for marktypes.contour_processor</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;zBritva&#39;</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="ContourProcessor"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor">[docs]</a><span class="k">class</span> <span class="nc">ContourProcessor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This class provide methods for recognizing landmarks in image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># cm</span>
+    <span class="n">focus_distance</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="c"># cm</span>
+    <span class="n">mark_size</span> <span class="o">=</span> <span class="mf">18.5</span>
+
+<div class="viewcode-block" id="ContourProcessor.distance"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.distance">[docs]</a>    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function calculates distance between two points.</span>
+
+<span class="sd">        :param point1: coordinate of the first point (x,y)</span>
+<span class="sd">        :param point2: coordinate of the second point (x,y)</span>
+
+<span class="sd">        :return: distance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">point2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">point2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ContourProcessor.middlePoint"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.middlePoint">[docs]</a>    <span class="k">def</span> <span class="nf">middlePoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function returns coordinates of point in line which pass throught point1 and point2. And point divides the line in a predetermined ratio</span>
+<span class="sd">        Source code was given there: http://stackoverflow.com/a/32857432/5623063</span>
+
+<span class="sd">        :param point1: coordinate of the first point (x,y)</span>
+<span class="sd">        :param point2: coordinate of the second point (x,y)</span>
+<span class="sd">        :param ratio: ratio of deviding</span>
+
+<span class="sd">        :return: point coordinates</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ratio</span> <span class="o">*</span> <span class="n">point2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">ratio</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">ratio</span> <span class="o">*</span> <span class="n">point2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">ratio</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">int0</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ContourProcessor.createLineIterator"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.createLineIterator">[docs]</a>    <span class="k">def</span> <span class="nf">createLineIterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Produces and array that consists of the coordinates and intensities of each pixel in a line between two points</span>
+
+<span class="sd">        :param point1: a numpy array that consists of the coordinate of the first point (x,y)</span>
+<span class="sd">        :param point2: a numpy array that consists of the coordinate of the second point (x,y)</span>
+<span class="sd">        :param img: the image being processed</span>
+
+<span class="sd">        :return: a numpy array that consists of the coordinates and intensities of each pixel in the radii (shape: [numPixels, 3], row = [x,y,intensity])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># define local variables for readability</span>
+
+        <span class="n">imageH</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">imageW</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">P1X</span> <span class="o">=</span> <span class="n">point1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">P1Y</span> <span class="o">=</span> <span class="n">point1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">P2X</span> <span class="o">=</span> <span class="n">point2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">P2Y</span> <span class="o">=</span> <span class="n">point2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c"># difference and absolute difference between points</span>
+        <span class="c"># used to calculate slope and relative location between points</span>
+        <span class="n">dX</span> <span class="o">=</span> <span class="n">P2X</span> <span class="o">-</span> <span class="n">P1X</span>
+        <span class="n">dY</span> <span class="o">=</span> <span class="n">P2Y</span> <span class="o">-</span> <span class="n">P1Y</span>
+        <span class="n">dXa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dX</span><span class="p">)</span>
+        <span class="n">dYa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dY</span><span class="p">)</span>
+
+        <span class="c"># predefine numpy array for output based on distance between points</span>
+
+        <span class="c"># itbuffer = np.empty(shape=(np.maximum(dYa, dXa), 3), dtype=np.float32)</span>
+        <span class="n">itbuffer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">dYa</span><span class="p">,</span> <span class="n">dXa</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">itbuffer</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+        <span class="c"># Obtain coordinates along the line using a form of Bresenham&#39;s algorithm</span>
+        <span class="n">negY</span> <span class="o">=</span> <span class="n">P1Y</span> <span class="o">&gt;</span> <span class="n">P2Y</span>
+        <span class="n">negX</span> <span class="o">=</span> <span class="n">P1X</span> <span class="o">&gt;</span> <span class="n">P2X</span>
+        <span class="k">if</span> <span class="n">P1X</span> <span class="o">==</span> <span class="n">P2X</span><span class="p">:</span>  <span class="c"># vertical line segment</span>
+            <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">P1X</span>
+            <span class="k">if</span> <span class="n">negY</span><span class="p">:</span>
+                <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">P1Y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">P1Y</span> <span class="o">-</span> <span class="n">dYa</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">P1Y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">P1Y</span> <span class="o">+</span> <span class="n">dYa</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">P1Y</span> <span class="o">==</span> <span class="n">P2Y</span><span class="p">:</span>  <span class="c"># horizontal line segment</span>
+            <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">P1Y</span>
+            <span class="k">if</span> <span class="n">negX</span><span class="p">:</span>
+                <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">P1X</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">P1X</span> <span class="o">-</span> <span class="n">dXa</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">P1X</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">P1X</span> <span class="o">+</span> <span class="n">dXa</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c"># diagonal line segment</span>
+            <span class="n">steepSlope</span> <span class="o">=</span> <span class="n">dYa</span> <span class="o">&gt;</span> <span class="n">dXa</span>
+            <span class="k">if</span> <span class="n">steepSlope</span><span class="p">:</span>
+                <span class="n">slope</span> <span class="o">=</span> <span class="n">dX</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="n">dY</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">negY</span><span class="p">:</span>
+                    <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">P1Y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">P1Y</span> <span class="o">-</span> <span class="n">dYa</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">P1Y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">P1Y</span> <span class="o">+</span> <span class="n">dYa</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">slope</span> <span class="o">*</span> <span class="p">(</span><span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">P1Y</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span> <span class="o">+</span> <span class="n">P1X</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">slope</span> <span class="o">=</span> <span class="n">dY</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="n">dX</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">negX</span><span class="p">:</span>
+                    <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">P1X</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">P1X</span> <span class="o">-</span> <span class="n">dXa</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">P1X</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">P1X</span> <span class="o">+</span> <span class="n">dXa</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">slope</span> <span class="o">*</span> <span class="p">(</span><span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">P1X</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span> <span class="o">+</span> <span class="n">P1Y</span>
+
+        <span class="c"># Remove points outside of image</span>
+        <span class="n">colX</span> <span class="o">=</span> <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">colY</span> <span class="o">=</span> <span class="n">itbuffer</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">itbuffer</span> <span class="o">=</span> <span class="n">itbuffer</span><span class="p">[(</span><span class="n">colX</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">colY</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">colX</span> <span class="o">&lt;</span> <span class="n">imageW</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">colY</span> <span class="o">&lt;</span> <span class="n">imageH</span><span class="p">)]</span>
+
+        <span class="c"># itbuffer[0][2] = [0, 0, 0]</span>
+
+        <span class="c"># Get intensities from img ndarray</span>
+        <span class="c"># itbuffer[:,2] = img[itbuffer[:,1].astype(np.uint),itbuffer[:,0].astype(np.uint)]</span>
+
+        <span class="c"># TODO CHECK PERFORMANCE PROBLEM!!!</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">binary</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">itbuffer</span><span class="p">)):</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="n">itbuffer</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint</span><span class="p">),</span> <span class="n">itbuffer</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint</span><span class="p">)]</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">itbuffer</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">itbuffer</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">itbuffer</span><span class="p">)):</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="n">itbuffer</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint</span><span class="p">),</span> <span class="n">itbuffer</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint</span><span class="p">)]</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">itbuffer</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">itbuffer</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="ContourProcessor.rgbToGray"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.rgbToGray">[docs]</a>    <span class="k">def</span> <span class="nf">rgbToGray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert RGB color to grayscale</span>
+
+<span class="sd">        :param color: color values for converting to grayscale</span>
+
+<span class="sd">        :return: grayscale color value [0-255]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#     Y = .2126 * R^gamma + .7152 * G^gamma + .0722 * B^gamma</span>
+        <span class="n">gray</span> <span class="o">=</span> <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="o">.</span><span class="mi">2126</span> <span class="o">+</span> <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="o">.</span><span class="mi">7152</span> <span class="o">+</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="o">.</span><span class="mo">072</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">gray</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ContourProcessor.getLineAvgColor"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.getLineAvgColor">[docs]</a>    <span class="k">def</span> <span class="nf">getLineAvgColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterator</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute average value of color in array of pixels given by createLineIterator</span>
+
+<span class="sd">        :param iterator: a numpy array given by :func:`createLineIterator`.</span>
+
+<span class="sd">        :return: average color value [0-255]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">binary</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pixel</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">:</span>
+                <span class="nb">sum</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgbToGray</span><span class="p">(</span><span class="n">pixel</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pixel</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">:</span>
+                <span class="nb">sum</span> <span class="o">+=</span> <span class="n">pixel</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="c"># debug</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Incorrect line&#39;</span><span class="p">)</span>
+
+        <span class="c"># if not binary:</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">sum</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterator</span><span class="p">))</span></div>
+        <span class="c"># else:</span>
+        <span class="c">#     return sum * 1.0 / len(iterator)</span>
+
+<div class="viewcode-block" id="ContourProcessor.checkAvg"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.checkAvg">[docs]</a>    <span class="k">def</span> <span class="nf">checkAvg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avg</span><span class="p">,</span> <span class="n">accept_percentage</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns true if the average value of pixels more than the accept_percentage</span>
+
+<span class="sd">        :param avg: a average values given by :func:`getLineAvgColor`.</span>
+<span class="sd">        :param accept_percentage: value in percent when average color will accent as allowable</span>
+
+<span class="sd">        :return: True - if average higher than given percentage, False - otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">avg</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">2.55</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">accept_percentage</span></div>
+
+<div class="viewcode-block" id="ContourProcessor.shiftContour"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.shiftContour">[docs]</a>    <span class="k">def</span> <span class="nf">shiftContour</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contour</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shifts all the points of the circuit to the specified values x and y</span>
+
+<span class="sd">        :param contour: contour for shifting</span>
+<span class="sd">        :param x: shift value for horizontal</span>
+<span class="sd">        :param y: shift values for vertical</span>
+
+<span class="sd">        :return: contour with new points</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">contour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">contour</span><span class="p">:</span>
+            <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">x</span>
+            <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">y</span>
+
+        <span class="k">return</span> <span class="n">contour</span></div>
+
+<div class="viewcode-block" id="ContourProcessor.isInCircleInside"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.isInCircleInside">[docs]</a>    <span class="k">def</span> <span class="nf">isInCircleInside</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contour</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns true if the all point of contour inside of the circle</span>
+
+<span class="sd">        :param contour: contoir for check</span>
+<span class="sd">        :param center: center of circle</span>
+<span class="sd">        :param radius: radius of circle</span>
+
+<span class="sd">        :return: True - if all point of contour inside if circle. False - otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">contour</span><span class="p">:</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">distance</span> <span class="o">&gt;</span> <span class="n">radius</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">ex</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="bp">True</span></div>
+
+<div class="viewcode-block" id="ContourProcessor.calculateDistance"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.calculateDistance">[docs]</a>    <span class="k">def</span> <span class="nf">calculateDistance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate distance from the camera to landmark bounding by circle</span>
+
+<span class="sd">        .. warning:: Method is incomplete</span>
+
+<span class="sd">        :param radius: radius of landmark</span>
+
+<span class="sd">        :return: distance from camera to landmark</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># return self.focus_distance / (self.mark_size * (radius)) * 500 * 153</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">focus_distance</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">focus_distance</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark_size</span> <span class="o">/</span> <span class="n">radius</span><span class="p">)</span> <span class="o">*</span> <span class="mi">183</span></div>
+
+<div class="viewcode-block" id="ContourProcessor.drawMark"><a class="viewcode-back" href="../../classes.html#marktypes.contour_processor.ContourProcessor.drawMark">[docs]</a>    <span class="k">def</span> <span class="nf">drawMark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">shift</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw landmark lines in image</span>
+
+<span class="sd">        .. warning:: Function must be overridden in child classes</span>
+
+<span class="sd">        :param img: image fot drawing</span>
+<span class="sd">        :param points: points of mark</span>
+<span class="sd">        :param shift:</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Function must be overridden in child classes&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Ilfat Galiev, Nikita Aslanyan, Alina Garaeva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

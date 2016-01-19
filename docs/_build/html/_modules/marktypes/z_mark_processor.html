@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>marktypes.z_mark_processor &mdash; LandmarkRecognition 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="LandmarkRecognition 0.1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> LandmarkRecognition
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../description.html">Landmark Recognition Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../classes.html">Classes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">LandmarkRecognition</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>marktypes.z_mark_processor</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for marktypes.z_mark_processor</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;zBritva&#39;</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">fabs</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">contour_processor</span> <span class="kn">import</span> <span class="n">ContourProcessor</span>
+
+
+<div class="viewcode-block" id="ZMarkProcessor"><a class="viewcode-back" href="../../classes.html#marktypes.z_mark_processor.ZMarkProcessor">[docs]</a><span class="k">class</span> <span class="nc">ZMarkProcessor</span><span class="p">(</span><span class="n">ContourProcessor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contains methods for determining Z-mark helipad</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ZMarkProcessor.getBoxROI"><a class="viewcode-back" href="../../classes.html#marktypes.z_mark_processor.ZMarkProcessor.getBoxROI">[docs]</a>    <span class="k">def</span> <span class="nf">getBoxROI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">box</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return interest coordinates of points for recognizing mark</span>
+
+<span class="sd">        :param box: a array of box given by :func:`cv2.boxPoints`</span>
+
+<span class="sd">        :return: coordinates of point</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># points of interest</span>
+        <span class="c">#</span>
+        <span class="c"># ##########</span>
+        <span class="c"># #        #</span>
+        <span class="c"># # 3####4 #</span>
+        <span class="c"># #  #7 8  #</span>
+        <span class="c"># # 2####5 #</span>
+        <span class="c"># #  #9 10 #</span>
+        <span class="c"># # 1####6 #</span>
+        <span class="c"># #        #</span>
+        <span class="c"># ##########</span>
+        <span class="c">#</span>
+
+        <span class="n">point1</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">point2</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">point3</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">point4</span> <span class="o">=</span> <span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+        <span class="n">distance1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">)</span>
+        <span class="n">distance2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">point2</span><span class="p">,</span> <span class="n">point3</span><span class="p">)</span>
+
+        <span class="n">middle_point_1</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">middle_point_2</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="n">middle_point_1_10</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">middle_point_1_90</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="n">middle_point_2_10</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">middle_point_2_90</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="n">distance1</span> <span class="o">&gt;</span> <span class="n">distance2</span><span class="p">:</span>
+            <span class="n">middle_point_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">)</span>
+            <span class="n">middle_point_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point3</span><span class="p">,</span> <span class="n">point4</span><span class="p">)</span>
+
+            <span class="n">middle_point_1_10</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">middle_point_1_90</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">middle_point_2_10</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point3</span><span class="p">,</span> <span class="n">point4</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">middle_point_2_90</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point3</span><span class="p">,</span> <span class="n">point4</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">middle_point_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point2</span><span class="p">,</span> <span class="n">point3</span><span class="p">)</span>
+            <span class="n">middle_point_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point4</span><span class="p">,</span> <span class="n">point1</span><span class="p">)</span>
+
+            <span class="n">middle_point_1_10</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point2</span><span class="p">,</span> <span class="n">point3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">middle_point_1_90</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point2</span><span class="p">,</span> <span class="n">point3</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">middle_point_2_10</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point4</span><span class="p">,</span> <span class="n">point1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">middle_point_2_90</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">point4</span><span class="p">,</span> <span class="n">point1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+        <span class="c"># find point 2 and 5</span>
+        <span class="n">mark_point_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">middle_point_1</span><span class="p">,</span> <span class="n">middle_point_2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">mark_point_5</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">middle_point_1</span><span class="p">,</span> <span class="n">middle_point_2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+        <span class="c"># find point 1 and 6</span>
+        <span class="n">mark_point_6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">middle_point_2_10</span><span class="p">,</span> <span class="n">middle_point_1_90</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">mark_point_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">middle_point_2_10</span><span class="p">,</span> <span class="n">middle_point_1_90</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+        <span class="c"># find point 3 and 4</span>
+        <span class="n">mark_point_3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">middle_point_1_10</span><span class="p">,</span> <span class="n">middle_point_2_90</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">mark_point_4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">middle_point_1_10</span><span class="p">,</span> <span class="n">middle_point_2_90</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+        <span class="c"># find point 7</span>
+        <span class="n">middle_point_3_4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">mark_point_3</span><span class="p">,</span> <span class="n">mark_point_4</span><span class="p">)</span>
+        <span class="n">mark_point_7</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">middle_point_3_4</span><span class="p">,</span> <span class="n">mark_point_5</span><span class="p">)</span>
+
+        <span class="c"># find point 8</span>
+        <span class="n">middle_point_1_6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">mark_point_1</span><span class="p">,</span> <span class="n">mark_point_6</span><span class="p">)</span>
+        <span class="n">mark_point_8</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">middlePoint</span><span class="p">(</span><span class="n">middle_point_1_6</span><span class="p">,</span> <span class="n">mark_point_2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">mark_point_1</span><span class="p">,</span> <span class="n">mark_point_2</span><span class="p">,</span> <span class="n">mark_point_3</span><span class="p">,</span> <span class="n">mark_point_4</span><span class="p">,</span> <span class="n">mark_point_5</span><span class="p">,</span> <span class="n">mark_point_6</span><span class="p">,</span> <span class="n">mark_point_7</span><span class="p">,</span>
+                <span class="n">mark_point_8</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ZMarkProcessor.checkBoxROIToHMark"><a class="viewcode-back" href="../../classes.html#marktypes.z_mark_processor.ZMarkProcessor.checkBoxROIToHMark">[docs]</a>    <span class="k">def</span> <span class="nf">checkBoxROIToHMark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">e_mark_points</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">accept_percentage</span><span class="o">=</span><span class="mi">85</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check coordinates given by :func:`ZMarkProcessor.getBoxROI`</span>
+
+<span class="sd">        :param image: binary image where was found landmark</span>
+<span class="sd">        :param h_mark_points: a array of point from given by :func:`ZMarkProcessor.getBoxROI`</span>
+<span class="sd">        :param binary: Should be True if image is binary format</span>
+<span class="sd">        :param accept_percentage: accept percentage when landmark will mark as recognized</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">point1</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">point2</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">point3</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">point4</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">point5</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">point6</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="n">point7</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+        <span class="n">point8</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="c"># 3 - 6</span>
+            <span class="n">iterator_3_6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createLineIterator</span><span class="p">(</span><span class="n">point3</span><span class="p">,</span> <span class="n">point6</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+            <span class="n">avg_color_3_6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLineAvgColor</span><span class="p">(</span><span class="n">iterator_3_6</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+
+            <span class="c"># 3 - 6</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkAvg</span><span class="p">(</span><span class="n">avg_color_3_6</span><span class="p">,</span> <span class="n">accept_percentage</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">False</span>
+
+            <span class="c"># 3 - 4</span>
+            <span class="n">iterator_3_4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createLineIterator</span><span class="p">(</span><span class="n">point3</span><span class="p">,</span> <span class="n">point4</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+            <span class="n">avg_color_3_4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLineAvgColor</span><span class="p">(</span><span class="n">iterator_3_4</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkAvg</span><span class="p">(</span><span class="n">avg_color_3_4</span><span class="p">,</span> <span class="n">accept_percentage</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">False</span>
+
+            <span class="c"># 1 - 6</span>
+            <span class="n">iterator_1_6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createLineIterator</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point6</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+            <span class="n">avg_color_1_6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLineAvgColor</span><span class="p">(</span><span class="n">iterator_1_6</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkAvg</span><span class="p">(</span><span class="n">avg_color_1_6</span><span class="p">,</span> <span class="n">accept_percentage</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">False</span>
+
+            <span class="c"># 7 - 8 (black)</span>
+            <span class="n">iterator_2_8</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createLineIterator</span><span class="p">(</span><span class="n">point2</span><span class="p">,</span> <span class="n">point8</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+            <span class="n">avg_color_2_8</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLineAvgColor</span><span class="p">(</span><span class="n">iterator_2_8</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+
+            <span class="c"># color = None</span>
+            <span class="c"># if not binary:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">avg_color_2_8</span>
+            <span class="c"># else:</span>
+            <span class="c">#     color = 1 - avg_color_7_8</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkAvg</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">accept_percentage</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">False</span>
+
+            <span class="c"># 9 - 10 (black)</span>
+            <span class="n">iterator_5_7</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createLineIterator</span><span class="p">(</span><span class="n">point5</span><span class="p">,</span> <span class="n">point7</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+            <span class="n">avg_color_5_7</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLineAvgColor</span><span class="p">(</span><span class="n">iterator_5_7</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+
+            <span class="c"># color = None</span>
+            <span class="c"># if not binary:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">avg_color_5_7</span>
+            <span class="c"># else:</span>
+            <span class="c">#     color = 1 - avg_color_9_10</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkAvg</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">accept_percentage</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">ex</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">return</span> <span class="bp">True</span></div>
+
+<div class="viewcode-block" id="ZMarkProcessor.drawMarkType"><a class="viewcode-back" href="../../classes.html#marktypes.z_mark_processor.ZMarkProcessor.drawMarkType">[docs]</a>    <span class="k">def</span> <span class="nf">drawMarkType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Display text with marktype Z</span>
+
+<span class="sd">        :param img: image for drawing</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="s">&#39;MARK TYPE: Z&#39;</span><span class="p">,</span>
+                    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="o">+</span> <span class="mi">55</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_COMPLEX</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ZMarkProcessor.drawMark"><a class="viewcode-back" href="../../classes.html#marktypes.z_mark_processor.ZMarkProcessor.drawMark">[docs]</a>    <span class="k">def</span> <span class="nf">drawMark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">e_mark_points</span><span class="p">,</span> <span class="n">shift</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw mark on image for visual display</span>
+
+<span class="sd">        :param img: image for drawing</span>
+<span class="sd">        :param h_mark_points: point of mark given by :func:`ZMarkProcessor.getBoxROI`</span>
+<span class="sd">        :param shift: shift coordinates of mark</span>
+
+<span class="sd">        .. warning:: parameter shift is obsolete</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># super(EMarkProcessor, self).drawMark(img, e_mark_points, shift)</span>
+
+        <span class="n">point1</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">point2</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">point3</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">point4</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">point5</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">point6</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="n">point7</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+        <span class="n">point8</span> <span class="o">=</span> <span class="n">e_mark_points</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+
+        <span class="c"># white</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">point3</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point3</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="n">point4</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point4</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">point3</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point3</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="n">point6</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point6</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point1</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="n">point6</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point6</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></div></div>
+
+        <span class="c"># black</span>
+        <span class="c"># cv2.line(img, (point2[0], point2[1]), (point8[0], point8[1]), (255, 0, 255))</span>
+        <span class="c"># cv2.line(img, (point5[0], point5[1]), (point7[0], point7[1]), (255, 0, 255))</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Ilfat Galiev, Nikita Aslanyan, Alina Garaeva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

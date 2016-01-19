@@ -6,6 +6,6 @@ marktypes/controur_processor.pyc
 marktypes/z_mark_processor.pyc
 marktypes/e_mark_processor.pyc
 marktypes/h_mark_processor.pyc
-docs/_build
 data
 *.pyc
+test.png

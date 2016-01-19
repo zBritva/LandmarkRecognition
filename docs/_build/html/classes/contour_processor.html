@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Classes &mdash; LandmarkRecognition 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="LandmarkRecognition 0.1.0 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LandmarkRecognition
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="simple">
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">LandmarkRecognition</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Classes</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/classes/contour_processor.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="classes">
+<span id="classes-label"></span><h1>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="contourprocessor-label"></span><dl class="class">
+<dt id="ContourProcessor">
+<em class="property">class </em><code class="descname">ContourProcessor</code><a class="headerlink" href="#ContourProcessor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This class contains methods for processing frame image for recognizing landmark</p>
+<dl class="method">
+<dt id="__distance__">
+<code class="descname">__distance__</code><span class="sig-paren">(</span><em>self</em>, <em>point1</em>, <em>point2</em><span class="sig-paren">)</span><a class="headerlink" href="#__distance__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function calculates distance between two points.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="__middlePoint__">
+<code class="descname">__middlePoint__</code><span class="sig-paren">(</span><em>self</em>, <em>point1</em>, <em>point2</em>, <em>ratio=1</em><span class="sig-paren">)</span><a class="headerlink" href="#__middlePoint__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function returns coordinates of point in line which pass throught point1 and point2. And point divides the line in a predetermined ratio</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="createLineIterator">
+<code class="descname">createLineIterator</code><span class="sig-paren">(</span><em>self</em>, <em>point1</em>, <em>point2</em>, <em>img</em>, <em>binary=False</em><span class="sig-paren">)</span><a class="headerlink" href="#createLineIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produces and array that consists of the coordinates and intensities of each pixel in a line between two points</p>
+<p>Source code was given there: <a class="reference external" href="http://stackoverflow.com/a/32857432/5623063">http://stackoverflow.com/a/32857432/5623063</a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="rgbToGray">
+<code class="descname">rgbToGray</code><span class="sig-paren">(</span><em>self</em>, <em>color</em><span class="sig-paren">)</span><a class="headerlink" href="#rgbToGray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert RGB color to grayscale</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">getLineAvgColor(self, iterator, binary=False):</code></dt>
+<dd><p>Compute average value of color in array of pixels given by ref:<cite>rst-  _createLineIterator-label</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="checkAvg">
+<code class="descname">checkAvg</code><span class="sig-paren">(</span><em>self</em>, <em>avg</em>, <em>accept_percentage</em><span class="sig-paren">)</span><a class="headerlink" href="#checkAvg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the average value of pixels more than the accept_percentage</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shiftContour">
+<code class="descname">shiftContour</code><span class="sig-paren">(</span><em>self</em>, <em>contour</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#shiftContour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shifts all the points of the circuit to the specified values x and y</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="isInCircleInside">
+<code class="descname">isInCircleInside</code><span class="sig-paren">(</span><em>self</em>, <em>contour</em>, <em>center</em>, <em>radius</em><span class="sig-paren">)</span><a class="headerlink" href="#isInCircleInside" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the all point of contour inside of the circle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="calculateDistance">
+<code class="descname">calculateDistance</code><span class="sig-paren">(</span><em>self</em>, <em>radius</em><span class="sig-paren">)</span><a class="headerlink" href="#calculateDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate distance from the camera to landmark bounding by circle</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">drawMark(self, img, points, shift):</code></dt>
+<dd><p>Draw landmark linies in image</p>
+</dd></dl>
+
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Function must be overridden in child classes</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Ilfat Galiev, Nikita Aslanyan, Alina Garaeva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

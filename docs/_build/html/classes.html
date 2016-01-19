@@ -1,0 +1,851 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Classes &mdash; LandmarkRecognition 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="LandmarkRecognition 0.1.0 documentation" href="index.html"/>
+        <link rel="prev" title="Landmark Recognition Workflow" href="description.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LandmarkRecognition
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="description.html">Landmark Recognition Workflow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Classes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">LandmarkRecognition</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Classes</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/classes.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="classes">
+<span id="classes-label"></span><h1>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-landmark_config"><span id="contourprocessor-label"></span></span><dl class="class">
+<dt id="landmark_config.LandmarkRecognitionConfiguration">
+<em class="property">class </em><code class="descclassname">landmark_config.</code><code class="descname">LandmarkRecognitionConfiguration</code><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class provide loading of config file (config/config.ini)</p>
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_low">
+<code class="descname">get_canny_binary_low</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_canny_binary_low"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_low" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load canny limits for low range</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_lower">
+<code class="descname">get_canny_binary_lower</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_canny_binary_lower"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_lower" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load canny limits for lower range</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_medium">
+<code class="descname">get_canny_binary_medium</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_canny_binary_medium"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_medium" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load canny limits for medium range</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_up">
+<code class="descname">get_canny_binary_up</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_canny_binary_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load canny limits for up range</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_upper">
+<code class="descname">get_canny_binary_upper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_canny_binary_upper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_canny_binary_upper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load canny limits for upper range</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_find_mode">
+<code class="descname">get_find_mode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_find_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_find_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This parameter set will script search all landmarks for current frame by processing
+all founded contours. Or skip all if first was found</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_frame_size">
+<code class="descname">get_frame_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_frame_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_frame_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return frame size to display image example in test mode</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_log_mode">
+<code class="descname">get_log_mode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_log_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_log_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logging of any messages of script: warnings and errors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_mode">
+<code class="descname">get_mode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return mode for image processing. This parameter using
+for select optimal values of canny operator for binarization image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="landmark_config.LandmarkRecognitionConfiguration.get_work_mode">
+<code class="descname">get_work_mode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_config.html#LandmarkRecognitionConfiguration.get_work_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_config.LandmarkRecognitionConfiguration.get_work_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This configuration control work mode of script:
+ACTIVE - script give current coordinates and mark type to another process
+PASSIVE - script give current coordinates and mark type to another process by request</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-landmark_frame"></span><dl class="class">
+<dt id="landmark_frame.LandmarkFrame">
+<em class="property">class </em><code class="descclassname">landmark_frame.</code><code class="descname">LandmarkFrame</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/landmark_frame.html#LandmarkFrame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#landmark_frame.LandmarkFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class process source grayscale image and give thre binary images for processing
+corresponding mode paramenter</p>
+</dd></dl>
+
+<span class="target" id="module-marktypes.contour_processor"></span><dl class="class">
+<dt id="marktypes.contour_processor.ContourProcessor">
+<em class="property">class </em><code class="descclassname">marktypes.contour_processor.</code><code class="descname">ContourProcessor</code><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provide methods for recognizing landmarks in image</p>
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.calculateDistance">
+<code class="descname">calculateDistance</code><span class="sig-paren">(</span><em>radius</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.calculateDistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.calculateDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate distance from the camera to landmark bounding by circle</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Method is incomplete</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>radius</strong> &#8211; radius of landmark</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">distance from camera to landmark</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.checkAvg">
+<code class="descname">checkAvg</code><span class="sig-paren">(</span><em>avg</em>, <em>accept_percentage</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.checkAvg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.checkAvg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the average value of pixels more than the accept_percentage</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>avg</strong> &#8211; a average values given by <a class="reference internal" href="#marktypes.contour_processor.ContourProcessor.getLineAvgColor" title="marktypes.contour_processor.ContourProcessor.getLineAvgColor"><code class="xref py py-func docutils literal"><span class="pre">getLineAvgColor()</span></code></a>.</li>
+<li><strong>accept_percentage</strong> &#8211; value in percent when average color will accent as allowable</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True - if average higher than given percentage, False - otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.createLineIterator">
+<code class="descname">createLineIterator</code><span class="sig-paren">(</span><em>point1</em>, <em>point2</em>, <em>img</em>, <em>binary=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.createLineIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.createLineIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produces and array that consists of the coordinates and intensities of each pixel in a line between two points</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>point1</strong> &#8211; a numpy array that consists of the coordinate of the first point (x,y)</li>
+<li><strong>point2</strong> &#8211; a numpy array that consists of the coordinate of the second point (x,y)</li>
+<li><strong>img</strong> &#8211; the image being processed</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a numpy array that consists of the coordinates and intensities of each pixel in the radii (shape: [numPixels, 3], row = [x,y,intensity])</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.distance">
+<code class="descname">distance</code><span class="sig-paren">(</span><em>point1</em>, <em>point2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function calculates distance between two points.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>point1</strong> &#8211; coordinate of the first point (x,y)</li>
+<li><strong>point2</strong> &#8211; coordinate of the second point (x,y)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">distance</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.drawMark">
+<code class="descname">drawMark</code><span class="sig-paren">(</span><em>img</em>, <em>points</em>, <em>shift</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.drawMark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.drawMark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw landmark lines in image</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Function must be overridden in child classes</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> &#8211; image fot drawing</li>
+<li><strong>points</strong> &#8211; points of mark</li>
+<li><strong>shift</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.getLineAvgColor">
+<code class="descname">getLineAvgColor</code><span class="sig-paren">(</span><em>iterator</em>, <em>binary=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.getLineAvgColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.getLineAvgColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute average value of color in array of pixels given by createLineIterator</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iterator</strong> &#8211; a numpy array given by <a class="reference internal" href="#marktypes.contour_processor.ContourProcessor.createLineIterator" title="marktypes.contour_processor.ContourProcessor.createLineIterator"><code class="xref py py-func docutils literal"><span class="pre">createLineIterator()</span></code></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">average color value [0-255]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.isInCircleInside">
+<code class="descname">isInCircleInside</code><span class="sig-paren">(</span><em>contour</em>, <em>center</em>, <em>radius</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.isInCircleInside"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.isInCircleInside" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the all point of contour inside of the circle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>contour</strong> &#8211; contoir for check</li>
+<li><strong>center</strong> &#8211; center of circle</li>
+<li><strong>radius</strong> &#8211; radius of circle</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True - if all point of contour inside if circle. False - otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.middlePoint">
+<code class="descname">middlePoint</code><span class="sig-paren">(</span><em>point1</em>, <em>point2</em>, <em>ratio=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.middlePoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.middlePoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function returns coordinates of point in line which pass throught point1 and point2. And point divides the line in a predetermined ratio
+Source code was given there: <a class="reference external" href="http://stackoverflow.com/a/32857432/5623063">http://stackoverflow.com/a/32857432/5623063</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>point1</strong> &#8211; coordinate of the first point (x,y)</li>
+<li><strong>point2</strong> &#8211; coordinate of the second point (x,y)</li>
+<li><strong>ratio</strong> &#8211; ratio of deviding</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">point coordinates</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.rgbToGray">
+<code class="descname">rgbToGray</code><span class="sig-paren">(</span><em>color</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.rgbToGray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.rgbToGray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert RGB color to grayscale</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> &#8211; color values for converting to grayscale</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">grayscale color value [0-255]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.contour_processor.ContourProcessor.shiftContour">
+<code class="descname">shiftContour</code><span class="sig-paren">(</span><em>contour</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/contour_processor.html#ContourProcessor.shiftContour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.contour_processor.ContourProcessor.shiftContour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shifts all the points of the circuit to the specified values x and y</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>contour</strong> &#8211; contour for shifting</li>
+<li><strong>x</strong> &#8211; shift value for horizontal</li>
+<li><strong>y</strong> &#8211; shift values for vertical</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">contour with new points</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-marktypes.h_mark_processor"></span><dl class="class">
+<dt id="marktypes.h_mark_processor.HMarkProcessor">
+<em class="property">class </em><code class="descclassname">marktypes.h_mark_processor.</code><code class="descname">HMarkProcessor</code><a class="reference internal" href="_modules/marktypes/h_mark_processor.html#HMarkProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.h_mark_processor.HMarkProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains methods for determining H-mark helipad</p>
+<dl class="method">
+<dt id="marktypes.h_mark_processor.HMarkProcessor.checkBoxROIToHMark">
+<code class="descname">checkBoxROIToHMark</code><span class="sig-paren">(</span><em>image</em>, <em>h_mark_points</em>, <em>binary=False</em>, <em>accept_percentage=85</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/h_mark_processor.html#HMarkProcessor.checkBoxROIToHMark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.h_mark_processor.HMarkProcessor.checkBoxROIToHMark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check coordinates given by <a class="reference internal" href="#marktypes.h_mark_processor.HMarkProcessor.getBoxROI" title="marktypes.h_mark_processor.HMarkProcessor.getBoxROI"><code class="xref py py-func docutils literal"><span class="pre">HMarkProcessor.getBoxROI()</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> &#8211; binary image where was found landmark</li>
+<li><strong>h_mark_points</strong> &#8211; a array of point from given by <a class="reference internal" href="#marktypes.h_mark_processor.HMarkProcessor.getBoxROI" title="marktypes.h_mark_processor.HMarkProcessor.getBoxROI"><code class="xref py py-func docutils literal"><span class="pre">HMarkProcessor.getBoxROI()</span></code></a></li>
+<li><strong>binary</strong> &#8211; Should be True if image is binary format</li>
+<li><strong>accept_percentage</strong> &#8211; accept percentage when landmark will mark as recognized</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.h_mark_processor.HMarkProcessor.drawMark">
+<code class="descname">drawMark</code><span class="sig-paren">(</span><em>img</em>, <em>h_mark_points</em>, <em>shift</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/h_mark_processor.html#HMarkProcessor.drawMark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.h_mark_processor.HMarkProcessor.drawMark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw mark on image for visual display</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>img</strong> &#8211; image for drawing</li>
+<li><strong>h_mark_points</strong> &#8211; point of mark given by <a class="reference internal" href="#marktypes.h_mark_processor.HMarkProcessor.getBoxROI" title="marktypes.h_mark_processor.HMarkProcessor.getBoxROI"><code class="xref py py-func docutils literal"><span class="pre">HMarkProcessor.getBoxROI()</span></code></a></li>
+<li><strong>shift</strong> &#8211; shift coordinates of mark</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">parameter shift is obsolete</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.h_mark_processor.HMarkProcessor.drawMarkType">
+<code class="descname">drawMarkType</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/h_mark_processor.html#HMarkProcessor.drawMarkType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.h_mark_processor.HMarkProcessor.drawMarkType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display text with marktype H</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> &#8211; image for drawing</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.h_mark_processor.HMarkProcessor.getBoxROI">
+<code class="descname">getBoxROI</code><span class="sig-paren">(</span><em>box</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/h_mark_processor.html#HMarkProcessor.getBoxROI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.h_mark_processor.HMarkProcessor.getBoxROI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return interest coordinates of points for recognizing mark</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>box</strong> &#8211; a array of box given by <code class="xref py py-func docutils literal"><span class="pre">cv2.boxPoints()</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">coordinates of point</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-marktypes.z_mark_processor"></span><dl class="class">
+<dt id="marktypes.z_mark_processor.ZMarkProcessor">
+<em class="property">class </em><code class="descclassname">marktypes.z_mark_processor.</code><code class="descname">ZMarkProcessor</code><a class="reference internal" href="_modules/marktypes/z_mark_processor.html#ZMarkProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.z_mark_processor.ZMarkProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains methods for determining Z-mark helipad</p>
+<dl class="method">
+<dt id="marktypes.z_mark_processor.ZMarkProcessor.checkBoxROIToHMark">
+<code class="descname">checkBoxROIToHMark</code><span class="sig-paren">(</span><em>image</em>, <em>e_mark_points</em>, <em>binary=False</em>, <em>accept_percentage=85</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/z_mark_processor.html#ZMarkProcessor.checkBoxROIToHMark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.z_mark_processor.ZMarkProcessor.checkBoxROIToHMark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check coordinates given by <a class="reference internal" href="#marktypes.z_mark_processor.ZMarkProcessor.getBoxROI" title="marktypes.z_mark_processor.ZMarkProcessor.getBoxROI"><code class="xref py py-func docutils literal"><span class="pre">ZMarkProcessor.getBoxROI()</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> &#8211; binary image where was found landmark</li>
+<li><strong>h_mark_points</strong> &#8211; a array of point from given by <a class="reference internal" href="#marktypes.z_mark_processor.ZMarkProcessor.getBoxROI" title="marktypes.z_mark_processor.ZMarkProcessor.getBoxROI"><code class="xref py py-func docutils literal"><span class="pre">ZMarkProcessor.getBoxROI()</span></code></a></li>
+<li><strong>binary</strong> &#8211; Should be True if image is binary format</li>
+<li><strong>accept_percentage</strong> &#8211; accept percentage when landmark will mark as recognized</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.z_mark_processor.ZMarkProcessor.drawMark">
+<code class="descname">drawMark</code><span class="sig-paren">(</span><em>img</em>, <em>e_mark_points</em>, <em>shift</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/z_mark_processor.html#ZMarkProcessor.drawMark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.z_mark_processor.ZMarkProcessor.drawMark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw mark on image for visual display</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>img</strong> &#8211; image for drawing</li>
+<li><strong>h_mark_points</strong> &#8211; point of mark given by <a class="reference internal" href="#marktypes.z_mark_processor.ZMarkProcessor.getBoxROI" title="marktypes.z_mark_processor.ZMarkProcessor.getBoxROI"><code class="xref py py-func docutils literal"><span class="pre">ZMarkProcessor.getBoxROI()</span></code></a></li>
+<li><strong>shift</strong> &#8211; shift coordinates of mark</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">parameter shift is obsolete</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.z_mark_processor.ZMarkProcessor.drawMarkType">
+<code class="descname">drawMarkType</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/z_mark_processor.html#ZMarkProcessor.drawMarkType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.z_mark_processor.ZMarkProcessor.drawMarkType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display text with marktype Z</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> &#8211; image for drawing</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.z_mark_processor.ZMarkProcessor.getBoxROI">
+<code class="descname">getBoxROI</code><span class="sig-paren">(</span><em>box</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/z_mark_processor.html#ZMarkProcessor.getBoxROI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.z_mark_processor.ZMarkProcessor.getBoxROI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return interest coordinates of points for recognizing mark</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>box</strong> &#8211; a array of box given by <code class="xref py py-func docutils literal"><span class="pre">cv2.boxPoints()</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">coordinates of point</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-marktypes.e_mark_processor"></span><dl class="class">
+<dt id="marktypes.e_mark_processor.EMarkProcessor">
+<em class="property">class </em><code class="descclassname">marktypes.e_mark_processor.</code><code class="descname">EMarkProcessor</code><a class="reference internal" href="_modules/marktypes/e_mark_processor.html#EMarkProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.e_mark_processor.EMarkProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains methods for determining E-mark helipad</p>
+<dl class="method">
+<dt id="marktypes.e_mark_processor.EMarkProcessor.checkBoxROIToHMark">
+<code class="descname">checkBoxROIToHMark</code><span class="sig-paren">(</span><em>image</em>, <em>e_mark_points</em>, <em>binary=False</em>, <em>accept_percentage=85</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/e_mark_processor.html#EMarkProcessor.checkBoxROIToHMark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.e_mark_processor.EMarkProcessor.checkBoxROIToHMark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check coordinates given by <a class="reference internal" href="#marktypes.e_mark_processor.EMarkProcessor.getBoxROI" title="marktypes.e_mark_processor.EMarkProcessor.getBoxROI"><code class="xref py py-func docutils literal"><span class="pre">EMarkProcessor.getBoxROI()</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> &#8211; binary image where was found landmark</li>
+<li><strong>h_mark_points</strong> &#8211; a array of point from given by <a class="reference internal" href="#marktypes.e_mark_processor.EMarkProcessor.getBoxROI" title="marktypes.e_mark_processor.EMarkProcessor.getBoxROI"><code class="xref py py-func docutils literal"><span class="pre">EMarkProcessor.getBoxROI()</span></code></a></li>
+<li><strong>binary</strong> &#8211; Should be True if image is binary format</li>
+<li><strong>accept_percentage</strong> &#8211; accept percentage when landmark will mark as recognized</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.e_mark_processor.EMarkProcessor.drawMark">
+<code class="descname">drawMark</code><span class="sig-paren">(</span><em>img</em>, <em>e_mark_points</em>, <em>shift</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/e_mark_processor.html#EMarkProcessor.drawMark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.e_mark_processor.EMarkProcessor.drawMark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw mark on image for visual display</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>img</strong> &#8211; image for drawing</li>
+<li><strong>h_mark_points</strong> &#8211; point of mark given by <a class="reference internal" href="#marktypes.e_mark_processor.EMarkProcessor.getBoxROI" title="marktypes.e_mark_processor.EMarkProcessor.getBoxROI"><code class="xref py py-func docutils literal"><span class="pre">EMarkProcessor.getBoxROI()</span></code></a></li>
+<li><strong>shift</strong> &#8211; shift coordinates of mark</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">parameter shift is obsolete</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.e_mark_processor.EMarkProcessor.drawMarkType">
+<code class="descname">drawMarkType</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/e_mark_processor.html#EMarkProcessor.drawMarkType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.e_mark_processor.EMarkProcessor.drawMarkType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display text with marktype E</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> &#8211; image for drawing</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="marktypes.e_mark_processor.EMarkProcessor.getBoxROI">
+<code class="descname">getBoxROI</code><span class="sig-paren">(</span><em>box</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/marktypes/e_mark_processor.html#EMarkProcessor.getBoxROI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#marktypes.e_mark_processor.EMarkProcessor.getBoxROI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return interest coordinates of points for recognizing mark</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>box</strong> &#8211; a array of box given by <code class="xref py py-func docutils literal"><span class="pre">cv2.boxPoints()</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">coordinates of point</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="description.html" class="btn btn-neutral" title="Landmark Recognition Workflow" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Ilfat Galiev, Nikita Aslanyan, Alina Garaeva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
