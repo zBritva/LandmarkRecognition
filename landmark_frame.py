@@ -21,7 +21,8 @@ class LandmarkFrame:
         self.mode = self.config.get_mode()
 
     def get_frames(self, img):
-        gray_hight = img
+        # gray_hight = img
+        gray_hight = np.copy(img)
         gray_medium = np.copy(img)
         gray_low = np.copy(img)
 

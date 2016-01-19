@@ -88,7 +88,7 @@ class LandmarkRecognitionConfiguration:
             ls = str.split(',')
             return int(ls[0]), int(ls[1])
         except Exception:
-            return 155, 225
+            return 155, 255
 
     def get_canny_binary_medium(self):
         """
@@ -101,7 +101,7 @@ class LandmarkRecognitionConfiguration:
             ls = str.split(',')
             return int(ls[0]), int(ls[1])
         except Exception:
-            return 125, 200
+            return 125, 255
 
     def get_canny_binary_low(self):
         """
@@ -114,7 +114,7 @@ class LandmarkRecognitionConfiguration:
             ls = str.split(',')
             return int(ls[0]), int(ls[1])
         except Exception:
-            return 75, 150
+            return 75, 255
 
     def get_canny_binary_lower(self):
         """
@@ -127,7 +127,7 @@ class LandmarkRecognitionConfiguration:
             ls = str.split(',')
             return int(ls[0]), int(ls[1])
         except Exception:
-            return 25, 125
+            return 25, 255
 
     def get_find_mode(self):
         """
