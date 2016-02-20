@@ -15,7 +15,7 @@ from landmark_config import LandmarkRecognitionConfiguration
 from landmark_frame import LandmarkFrame
 
 
-class LandmarkRecognition:
+class HEZDetector:
     def __init__(self):
         self.mark_positions = list()
 
@@ -225,5 +225,5 @@ class LandmarkRecognition:
 
 
 if __name__ == '__main__':
-    process = LandmarkRecognition()
+    process = HEZDetector()
     process.process()
