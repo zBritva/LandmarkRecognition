@@ -98,12 +98,13 @@ class HEZDetector:
                 binary_result = cv2.medianBlur(bin_res, 3)
 
                 # WE FIND ALL CONTOURS IN IMAGE TO PROCESS
-                im2, contours, hierarchy = cv2.findContours(binary_result, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
+                #3.0.0. im2, contours, hierarchy = cv2.findContours(binary_result, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+                contours, _ = cv2.findContours(binary_result, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
                 # PROCESSING ALL CONTOURS FOR CURRENT FRAME
                 for contour in contours:
                     # mark_found = False
-                    contour = cv2.approxPolyDP(contour, 2, True)
+                    contour = cv2.approxPolyDP(contour, 2, False)
 
                     # finding circle by geometrically criteria
                     area = cv2.contourArea(contour, oriented=False)
@@ -124,7 +125,8 @@ class HEZDetector:
                         # just in try except,
                         # because some time we can get error durning work of cv2.findContours function
                         try:
-                            tt, circle_inner_contours, circle_inner_contours_hierarchy = cv2.findContours(
+                            #3.0.0. tt, circle_inner_contours, circle_inner_contours_hierarchy = cv2.findContours(
+                            circle_inner_contours, circle_inner_contours_hierarchy = cv2.findContours(
                                     np.copy(roi_circle),
                                     cv2.RETR_LIST,
                                     cv2.CHAIN_APPROX_SIMPLE)
@@ -157,7 +159,8 @@ class HEZDetector:
 
                             # we get the minimum rectangle covering the circuit
                             rect = cv2.minAreaRect(contour_in_circle)
-                            box = cv2.boxPoints(rect)
+                            #3.0.0 box = cv2.cv.boxPoints(rect)
+                            box = cv2.cv.BoxPoints(rect)
                             box = np.int0(box)
 
                             # check to H mark
@@ -187,7 +190,7 @@ class HEZDetector:
                                 cv2.drawContours(roi_frame, [box], 0, (0, 255, 0), 2)
                                 zmark.drawMark(roi_frame, z_mark_points, (x, y))
 
-                            cv2.imshow('frame3', cv2.resize(roi_frame, display_frame_size))
+                            # cv2.imshow('frame3', cv2.resize(roi_frame, display_frame_size))
 
                             if result_z_mark or result_e_mark or result_h_mark:
                                 mark_found = True  # set that mark found in current frame, skip all other contours
@@ -204,7 +207,7 @@ class HEZDetector:
                             break  # break the main loop of contour processing, because mark was found for current frame
 
                             # cv2.imshow('frame4', cv2.resize(roi_circle, display_frame_size))
-                cv2.imshow('frame2', cv2.resize(binary_source_image, display_frame_size))
+                # cv2.imshow('frame2', cv2.resize(binary_source_image, display_frame_size))
 
                 # cv2.imshow('frame2_bin0', cv2.resize(binary_images[0], display_frame_size))
                 # cv2.imshow('frame2_bin1', cv2.resize(binary_images[1], display_frame_size))
@@ -218,10 +221,11 @@ class HEZDetector:
 
             except Exception as ex:
                 print ex
+        print ex.args
 
         # When everything done, release the capture
         cap.release()
-        cv2.destroyAllWindows()
+        # cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
