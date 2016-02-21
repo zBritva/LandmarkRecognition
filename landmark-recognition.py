@@ -8,6 +8,7 @@ import sys
 import cv2
 import numpy as np
 import time
+from multiprocessing import Process, Queue
 from marktypes import e_mark_processor
 from marktypes import h_mark_processor
 from marktypes import z_mark_processor
@@ -15,9 +16,14 @@ from landmark_config import LandmarkRecognitionConfiguration
 from landmark_frame import LandmarkFrame
 
 
-class HEZDetector:
+class HEZDetector(Process):
     def __init__(self):
+        super(HEZDetector, self).__init__()
         self.mark_positions = list()
+        self.queue = Queue(1)
+
+    def run(self):
+        self.process()
 
     def process(self):
         prev_time = time.time()
@@ -38,6 +44,8 @@ class HEZDetector:
 
         print 'FRAME SIZE:' + str(len(test_frame[0])) + ' ' + str(len(test_frame[1]))
 
+        frame_center = (len(test_frame[0]) / 2, len(test_frame[1]) / 2)
+
         hmark = h_mark_processor.HMarkProcessor()
         emark = e_mark_processor.EMarkProcessor()
         zmark = z_mark_processor.ZMarkProcessor()
@@ -56,8 +64,11 @@ class HEZDetector:
 
         display_frame_size = lrc.get_frame_size()
 
+        test_int = 0
         while (True):
+            test_int += 1
             try:
+                # FOR LOW PERFORMANCE IMITATION, ONLY FOR TEST
                 cur_time = time.time()
                 if cur_time - prev_time < 0.5:
                     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -99,7 +110,7 @@ class HEZDetector:
 
                 # WE FIND ALL CONTOURS IN IMAGE TO PROCESS
 
-                #3.0.0. im2, contours, hierarchy = cv2.findContours(binary_result, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+                # 3.0.0. im2, contours, hierarchy = cv2.findContours(binary_result, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
                 contours, _ = cv2.findContours(binary_result, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
                 # PROCESSING ALL CONTOURS FOR CURRENT FRAME
                 for contour in contours:
@@ -125,7 +136,7 @@ class HEZDetector:
                         # just in try except,
                         # because some time we can get error durning work of cv2.findContours function
                         try:
-                            #3.0.0. tt, circle_inner_contours, circle_inner_contours_hierarchy = cv2.findContours(
+                            # 3.0.0. tt, circle_inner_contours, circle_inner_contours_hierarchy = cv2.findContours(
                             circle_inner_contours, circle_inner_contours_hierarchy = cv2.findContours(
                                     np.copy(roi_circle),
                                     cv2.RETR_LIST,
@@ -159,7 +170,7 @@ class HEZDetector:
 
                             # we get the minimum rectangle covering the circuit
                             rect = cv2.minAreaRect(contour_in_circle)
-                            #3.0.0 box = cv2.cv.boxPoints(rect)
+                            # 3.0.0 box = cv2.cv.boxPoints(rect)
                             box = cv2.cv.BoxPoints(rect)
                             box = np.int0(box)
 
@@ -194,6 +205,28 @@ class HEZDetector:
 
                             if result_z_mark or result_e_mark or result_h_mark:
                                 mark_found = True  # set that mark found in current frame, skip all other contours
+
+                                # IF MARK WAS FOUND INFORM CONTROLLING PROCESS ABOUT MARK POSITION
+                                # BEGIN SEND DATA TO ANOTHER PROCESS
+                                # CHECK ABOUT THAT CONTROLLER PROCESS EVALUATED PREVIOUS INFORMATION
+                                if not self.queue.full():
+                                    center01 = hmark.middlePoint(box[0], box[1])
+                                    center23 = hmark.middlePoint(box[2], box[3])
+                                    mark_center = hmark.middlePoint(center01, center23)
+                                    deviation = mark_center[0] - frame_center[0], mark_center[1] - frame_center[1]
+                                    mark_type = None
+                                    if result_h_mark:
+                                        mark_type = 'H'
+                                    else:
+                                        if result_e_mark:
+                                            mark_type = 'E'
+                                        else:
+                                            if result_z_mark:
+                                                mark_type = 'Z'
+
+                                    self.queue.put((mark_type, deviation))
+                                # END SEND DATA TO ANOTHER PROCESS
+
                                 break
 
                         # draw cirle if mark was found
@@ -221,7 +254,7 @@ class HEZDetector:
 
             except Exception as ex:
                 print ex
-        print ex.args
+        print ex.argsq
 
         # When everything done, release the capture
         cap.release()
@@ -230,4 +263,12 @@ class HEZDetector:
 
 if __name__ == '__main__':
     process = HEZDetector()
-    process.process()
+    queue = process.queue
+    process.start()
+    while (True):
+        # process will wait data if queue is empty
+        if not queue.empty():
+            tmp = queue.get()
+            print 'WAS GIVEN MARK ' + str(tmp[0]) + ' COORDINATES: ' + str(tmp[1][0]) + ' ' + str(tmp[1][1])
+
+        # WRITE HERE CODE FOR CONTROLL QUADROCOPTER
